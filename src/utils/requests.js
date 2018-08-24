@@ -9,6 +9,6 @@ firebase.initializeApp(config);
 const database = firebase.database();
 
 export const get = (path) => database.ref(path).once('value');
-export const post = (path, data) => {};
-export const put = () => {};
-export const del = (path, data) => {};
+export const post = (path, id, data) => database.ref(`${path}/${id}`).set(data);
+export const put = (path, id, data) => database.ref().update({[`${path}/${id}`]: data});
+export const del = (path, id) => database.ref(`${path}/${id}`).remove();

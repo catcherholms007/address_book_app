@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import uuid from 'uuid/v4';
+import ContactActions from "../../actions/contactActions";
 
 const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+function getContactFromState(state) {
+  return {
+    name: state.name,
+    email: state.email
+  }
+}
 
 class ContactForm extends Component{
 
@@ -24,6 +32,7 @@ class ContactForm extends Component{
 
   readProps(props) {
     const id = props.match.params.contactId;
+    console.log(props.contacts);
     if (id in props.contacts.data) {
       const contact = props.contacts.data[id];
       this.setState({
@@ -56,6 +65,9 @@ class ContactForm extends Component{
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.page.nextRoute === '/') {
+      this.onCancelClick();
+    }
     this.readProps(nextProps);
   }
 
@@ -75,11 +87,17 @@ class ContactForm extends Component{
   }
 
   onSaveClick() {
-    // TODO
+    console.log(this.state.id);
+    if (this.state.isNew) {
+      this.props.dispatch(ContactActions.create(this.state.id, getContactFromState(this.state)));
+    }
+    else {
+      this.props.dispatch(ContactActions.update(this.state.id, getContactFromState(this.state)));
+    }
   }
 
   onDeleteClick() {
-    // TODO
+    this.props.dispatch(ContactActions.delete(this.state.id));
   }
 
   onCancelClick() {
@@ -100,6 +118,7 @@ class ContactForm extends Component{
               value={this.state.name}
               required
               onChange={this.onChangeName}
+              placeholder={'name'}
             />
             <input
               name={'email'}
@@ -108,6 +127,7 @@ class ContactForm extends Component{
               pattern={emailRegExp}
               onChange={this.onChangeEmail}
               required
+              placeholder={'email'}
             />
             {!this.state.isNew && <button
               name={'delete'}
@@ -139,7 +159,8 @@ class ContactForm extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    contacts: state.contacts.toJS()
+    contacts: state.contacts.toJS(),
+    page: state.page.toJS()
   };
 };
 

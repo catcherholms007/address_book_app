@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
 import contacts from './contactReducer';
+import page from './pageReducer';
 
 const reducers = combineReducers({
-  contacts
+  contacts,
+  page,
 });
 
 export default reducers;

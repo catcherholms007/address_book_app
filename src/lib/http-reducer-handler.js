@@ -1,14 +1,16 @@
 import Immutable from 'immutable';
 
-export default (state, action, cb) => {
+export function clearErrors(map) {
+  map.delete('error');
+  map.delete('errorData');
+}
+
+export default (state, action) => {
   const meta = action.meta || {};
 
   return state.withMutations((map) => {
-    map.delete('error');
-    map.delete('errorData');
-
-    map.set('loading', meta.loading || false);
-
+    clearErrors(map);
+    map.set('loading', meta.loading === undefined ?  false: meta.loading);
     if (action.error) {
       try {
         map.set('errorData', Immutable.fromJS(action.payload.body));
@@ -18,7 +20,9 @@ export default (state, action, cb) => {
 
       map.set('error', Immutable.fromJS(action.payload));
     } else if (!meta.loading) {
-        map.set('data', Immutable.fromJS(action.payload));
+        if (action.payload !== undefined) {
+          map.set('data', Immutable.fromJS(action.payload));
+        }
     }
   });
 };
