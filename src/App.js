@@ -5,7 +5,7 @@ import './App.css';
 import ContactActions from './actions/contactActions';
 import ContactList from "./components/contacts/ContactList";
 import {Route, withRouter} from "react-router-dom";
-import ContactForm from "./components/contacts/ContactForm";
+import ContactForm from "./components/contacts/contactForm/ContactForm";
 
 
 class App extends Component {

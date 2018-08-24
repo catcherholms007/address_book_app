@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import uuid from 'uuid/v4';
-import ContactActions from "../../actions/contactActions";
-
-const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+import ContactActions from "../../../actions/contactActions";
+import Email from "./email/Email";
 
 function getContactFromState(state) {
   return {
@@ -16,23 +15,26 @@ class ContactForm extends Component{
 
   constructor(props) {
     super(props);
+
     this.state = {
       isNew: true,
       id: null,
       name: null,
       email: null,
-      loading: true
+      loading: true,
+      isValid: true
     };
+
     this.onCancelClick = this.onCancelClick.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
+    this.onSuccessEmailValidation = this.onSuccessEmailValidation.bind(this);
+    this.onErrorValidation = this.onErrorValidation.bind(this);
   }
 
   readProps(props) {
     const id = props.match.params.contactId;
-    console.log(props.contacts);
     if (id in props.contacts.data) {
       const contact = props.contacts.data[id];
       this.setState({
@@ -57,7 +59,6 @@ class ContactForm extends Component{
       })
   }
 
-
   componentDidMount() {
     if (!this.props.contacts.loading) {
       this.readProps(this.props);
@@ -68,15 +69,9 @@ class ContactForm extends Component{
     if (nextProps.page.nextRoute === '/') {
       this.onCancelClick();
     }
-    this.readProps(nextProps);
-  }
-
-  onChangeEmail(event) {
-    const value = event.target.value;
-    // TODO validation
-    this.setState({
-      email: value
-    })
+    else {
+      this.readProps(nextProps);
+    }
   }
 
   onChangeName(event) {
@@ -87,7 +82,6 @@ class ContactForm extends Component{
   }
 
   onSaveClick() {
-    console.log(this.state.id);
     if (this.state.isNew) {
       this.props.dispatch(ContactActions.create(this.state.id, getContactFromState(this.state)));
     }
@@ -105,6 +99,19 @@ class ContactForm extends Component{
     history.replace(match.url.slice(0, match.url.lastIndexOf('/')))
   }
 
+  onSuccessEmailValidation(value) {
+    this.setState({
+      email: value,
+      isValid: true
+    })
+  }
+
+  onErrorValidation() {
+    this.setState({
+      isValid: false
+    })
+  }
+
   render() {
     if (this.state.loading) {
       return 'Loading';
@@ -120,40 +127,39 @@ class ContactForm extends Component{
               onChange={this.onChangeName}
               placeholder={'name'}
             />
-            <input
-              name={'email'}
+            <Email
               value={this.state.email}
-              type={'email'}
-              pattern={emailRegExp}
-              onChange={this.onChangeEmail}
-              required
-              placeholder={'email'}
+              onErrorValidation={this.onErrorValidation}
+              onSuccessValidation={this.onSuccessEmailValidation}
             />
-            {!this.state.isNew && <button
-              name={'delete'}
-              onClick={this.onDeleteClick}
-            >
-              {'Delete'}
-            </button>}
+            {!this.state.isNew &&
+              <button
+                name={'delete'}
+                onClick={this.onDeleteClick}
+              >
+                {'Delete'}
+              </button>
+            }
             <button
               name={'cancel'}
               onClick={this.onCancelClick}
             >
               {'Cancel'}
             </button>
-            <button
-              name={'save'}
-              type={'submit'}
-              onClick={this.onSaveClick}
-            >
-              {'Ok'}
+            {this.state.isValid &&
+              <button
+                name={'save'}
+                type={'submit'}
+                onClick={this.onSaveClick}
+              >
+                {'Ok'}
               </button>
+            }
           </div>
         )
       }
       return 'NOT FOUND';
     }
-
   }
 }
 
