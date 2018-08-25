@@ -46,8 +46,9 @@ export default (state = Immutable.Map(initialState), action) => {
 
     case SEARCH_BY_CONTACTS:
       return state.withMutations((map) => {
-        const query = action.payload.query.toLowerCase();
-        map.set('filterQuery', query);
+        const origin = action.payload.query;
+        const query = origin.toLowerCase();
+        map.set('filterQuery', origin);
         map.set('filterResult', map.get('data').filter(value => {
           return value.get('name').toLowerCase().includes(query) || value.get('email').toLowerCase().includes(query);
         }));
