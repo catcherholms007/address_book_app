@@ -33,7 +33,7 @@ class ContactList extends Component{
           <NavLink
             to={'/new'}
           >
-            {'+'}
+            <button className={'contact-list__add-button'}>{'+'}</button>
           </NavLink>
         </div>
       </div>

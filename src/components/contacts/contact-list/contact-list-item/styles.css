@@ -1,3 +1,35 @@
 .contact-list-item{
     border-bottom: 1px solid black;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.contact-list-item__name{
+    font-weight: bold;
+    color: black;
+    display: inline;
+    border-bottom: 1px dashed;
+}
+
+a {
+    text-decoration: none;
+}
+
+.contact-list-item:nth-child(2n+1) {
+    background-color: rgb(229, 229, 229);
+}
+
+.contact-list-item__actions{
+    display: flex;
+    align-content: center;
+}
+
+.contact-list-item__actions button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
 }

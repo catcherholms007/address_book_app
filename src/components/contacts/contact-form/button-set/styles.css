@@ -1,0 +1,35 @@
+.contact-form__button-set {
+    margin-top: 20px;
+}
+
+.contact-form__button-set::after{
+    clear: both;
+}
+
+.contact-form__button-set button {
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100px;
+    padding: 5px;
+}
+
+.button-set__cancel-button {
+    border: 1px solid black;
+    background-color: transparent;
+    float: right;
+    margin-left: 15px;
+}
+
+.button-set__save-button {
+    border: 1px solid rgb(153, 153, 153);
+    background-color: rgb(122, 182, 72);
+    color: white;
+    float: right;
+    margin-left: 15px;
+}
+
+.button-set__delete-button {
+    border: 1px solid rgb(153, 153, 153);
+    background-color: rgb(201, 45, 57);
+    color: white;
+}

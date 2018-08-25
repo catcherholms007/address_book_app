@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import uuid from 'uuid/v4';
+
 import ContactActions from "../../../actions/contactActions";
 import Email from "./email/Email";
+
+import './styles.css';
+import ButtonSet from "./button-set/ButtonSet";
 
 function getContactFromState(state) {
   return {
@@ -31,6 +35,7 @@ class ContactForm extends Component{
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onSuccessEmailValidation = this.onSuccessEmailValidation.bind(this);
     this.onErrorValidation = this.onErrorValidation.bind(this);
+    this.buttonsData = this.buttonsData.bind(this);
   }
 
   readProps(props) {
@@ -112,6 +117,36 @@ class ContactForm extends Component{
     })
   }
 
+  buttonsData() {
+    return [
+      {
+        className: 'button-set__delete-button',
+        name: 'delete',
+        onClick: this.onDeleteClick,
+        isVisible: !this.state.isNew,
+        type: 'button',
+        label: 'Delete'
+      },
+      {
+        className: 'button-set__save-button',
+        name: 'save',
+        onClick: this.onCancelClick,
+        isVisible: this.state.isValid,
+        type: 'submit',
+        label: 'Ok'
+      },
+      {
+        className: 'button-set__cancel-button',
+        name: 'cancel',
+        onClick: this.onCancelClick,
+        isVisible: true,
+        type: 'button',
+        label: 'Cancel'
+      }
+    ];
+  }
+
+
   render() {
     if (this.state.loading) {
       return 'Loading';
@@ -119,42 +154,20 @@ class ContactForm extends Component{
     else {
       if (this.state.id) {
         return (
-          <div className={'contact-from'}>
+          <div className={'contact-form'}>
             <input
               name={'name'}
               value={this.state.name}
               required
               onChange={this.onChangeName}
-              placeholder={'name'}
+              placeholder={'Name'}
             />
             <Email
               value={this.state.email}
               onErrorValidation={this.onErrorValidation}
               onSuccessValidation={this.onSuccessEmailValidation}
             />
-            {!this.state.isNew &&
-              <button
-                name={'delete'}
-                onClick={this.onDeleteClick}
-              >
-                {'Delete'}
-              </button>
-            }
-            <button
-              name={'cancel'}
-              onClick={this.onCancelClick}
-            >
-              {'Cancel'}
-            </button>
-            {this.state.isValid &&
-              <button
-                name={'save'}
-                type={'submit'}
-                onClick={this.onSaveClick}
-              >
-                {'Ok'}
-              </button>
-            }
+            <ButtonSet buttons={this.buttonsData()}/>
           </div>
         )
       }

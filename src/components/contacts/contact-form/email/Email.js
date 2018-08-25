@@ -53,7 +53,7 @@ export default class Email extends React.Component{
           pattern={emailRegExp}
           onChange={this.onChangeEmail}
           required
-          placeholder={'email'}
+          placeholder={'Email'}
         />
       </div>
     )
