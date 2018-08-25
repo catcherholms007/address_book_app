@@ -1,20 +1,16 @@
 .search-container {
     display: block;
     width: 100%;
-}
-
-.search-container-content {
     position: relative;
-    width: 100%;
 }
 
-.search-container-content svg {
+.search-container svg {
     position: absolute;
     top: 4px;
     left: 4px;
 }
 
-.search-container-content input {
+.search-container input {
     width: 100%;
     height: 32px;
     padding: 5px 5px 5px 28px;

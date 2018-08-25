@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import uuid from 'uuid/v4';
 
-import './styles.css';
 import ContactForm from "./ContactForm";
+
+import './styles.css';
 
 class ContactFormLoader extends Component {
 
@@ -56,22 +57,21 @@ class ContactFormLoader extends Component {
   }
 
   render() {
-    return (
-      <div className={'contact-form'}>
-        {this.state.loading
-          ? 'Loading'
-          : this.state.id
-            ? (
-              <ContactForm
-                {...this.props}
-                id={this.state.id}
-                isNew={this.state.isNew}
-              />
-            )
-            : 'Not Found'
-        }
-      </div>
-    )
+    if (this.state.loading) {
+      return 'Loading';
+    }
+    else {
+      if (this.state.id) {
+        return (
+          <ContactForm
+            {...this.props}
+            id={this.state.id}
+            isNew={this.state.isNew}
+          />
+        );
+      }
+      return 'Not Found';
+    }
   }
 }
 

@@ -1,10 +1,10 @@
 import ContactsAPI from '../api/contacts-api';
-import handleHttpAction from '../lib/handle-http-action';
 import {
   CLEAR_SEARCH,
+  GET_CONTACTS,
+  SEARCH_BY_CONTACTS,
   CREATE_CONTACT_SUCCESS,
   DELETE_CONTACT_SUCCESS,
-  GET_CONTACTS, SEARCH_BY_CONTACTS,
   UPDATE_CONTACT_SUCCESS
 } from "../constants/contact-constants";
 import {CLOSE_CONTACT_FORM} from "../constants/page-constants";
@@ -13,7 +13,12 @@ export default {
 
   get() {
     return (dispatch) => {
-      return handleHttpAction(dispatch, GET_CONTACTS, ContactsAPI.get());
+      return ContactsAPI.get()
+        .then((snapshot) => {
+          if (snapshot) {
+            dispatch({type: GET_CONTACTS, payload: snapshot.val()});
+          }
+        })
     };
   },
 
@@ -24,10 +29,6 @@ export default {
           dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
           dispatch({type: CLOSE_CONTACT_FORM});
         })
-        .catch((err) => {
-          console.log(err);
-          // TODO handling request errors
-        });
     };
   },
 
@@ -38,10 +39,6 @@ export default {
           dispatch({type: UPDATE_CONTACT_SUCCESS, payload: {id, contact}});
           dispatch({type: CLOSE_CONTACT_FORM});
         })
-        .catch((err) => {
-          console.log(err);
-          // TODO handling request errors
-        });
     };
   },
 
@@ -52,10 +49,6 @@ export default {
           dispatch({type: DELETE_CONTACT_SUCCESS, payload: {id}});
           dispatch({type: CLOSE_CONTACT_FORM});
         })
-        .catch((err) => {
-          console.log(err);
-          // TODO handling request errors
-        });
     };
   },
 

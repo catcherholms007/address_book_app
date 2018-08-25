@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {Route, withRouter} from "react-router-dom";
 
-import './App.css';
 import ContactActions from './actions/contactActions';
 import ContactList from "./components/contacts/contact-list/ContactList";
+import ContactFormLoader from "./components/contacts/contact-form/ContactFormLoader";
 
 import 'normalize.css';
-import ContactFormLoader from "./components/contacts/contact-form/ContactFormLoader";
+
+import './App.css';
 
 class App extends Component {
 
@@ -19,7 +20,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">My Address Book</h1>
+          <h1 className="App-title">My Address Book {this.props.page.status}</h1>
         </header>
           <Route
             component={ContactList}
@@ -34,4 +35,10 @@ class App extends Component {
   }
 }
 
-export default withRouter(connect()(App));
+const mapStateToProps = (state) => {
+  return {
+    page: state.page.toJS()
+  }
+};
+
+export default withRouter(connect(mapStateToProps)(App));

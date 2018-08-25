@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 
-import ContactActions from "../../../actions/contactActions";
+import Name from "./name/Name";
 import Email from "./email/Email";
 import ButtonSet from "./button-set/ButtonSet";
-import Name from "./name/Name";
+import PageActions from "../../../actions/pageActions";
+import ContactActions from "../../../actions/contactActions";
 
 import './styles.css';
 
@@ -39,6 +40,11 @@ class ContactForm extends Component {
       this.email.value = '';
       this.name.value = '';
     }
+    this.props.dispatch(PageActions.viewByStatus(this.props.isNew))
+  }
+
+  componentWillUnmount() {
+      this.props.dispatch(PageActions.viewMain())
   }
 
   setEmailRef(input) {
