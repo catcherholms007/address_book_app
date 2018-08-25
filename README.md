@@ -13,3 +13,5 @@ Additional dependencies
 - redux-thunk
 - firebase
 - immutable
+- uuid
+- react-router-dom
