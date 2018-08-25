@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css'
+import './styles.css'
 
 const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 

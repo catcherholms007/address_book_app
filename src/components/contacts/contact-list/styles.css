@@ -1,0 +1,6 @@
+.contact-list__content{
+    display: block;
+    position: relative;
+    margin-top: 10px;
+    border: 1px solid black;
+}

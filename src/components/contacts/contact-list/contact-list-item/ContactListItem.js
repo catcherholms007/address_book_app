@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import {NavLink} from "react-router-dom";
-import ContactActions from "../../actions/contactActions";
 import {connect} from "react-redux";
+
+import ContactActions from "../../../../actions/contactActions";
+
+import './styles.css';
 
 class ContactListItem extends Component{
 
