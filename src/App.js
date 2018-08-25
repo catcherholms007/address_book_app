@@ -5,9 +5,9 @@ import {Route, withRouter} from "react-router-dom";
 import './App.css';
 import ContactActions from './actions/contactActions';
 import ContactList from "./components/contacts/contact-list/ContactList";
-import ContactForm from "./components/contacts/contact-form/ContactForm";
 
 import 'normalize.css';
+import ContactFormLoader from "./components/contacts/contact-form/ContactFormLoader";
 
 class App extends Component {
 
@@ -26,7 +26,7 @@ class App extends Component {
             path={`${this.props.match.url}/`}
           />
           <Route
-            component={ContactForm}
+            component={ContactFormLoader}
             path={`/:contactId/`}
           />
       </div>

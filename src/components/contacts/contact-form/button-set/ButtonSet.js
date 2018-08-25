@@ -8,6 +8,7 @@ function ButtonSet({buttons}) {
       {buttons.filter(button => button.isVisible).map(button => (
         <button
           className={button.className}
+          key={'button_' + button.name}
           type={button.type}
           name={button.name}
           onClick={button.onClick}

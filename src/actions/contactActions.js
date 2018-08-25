@@ -21,8 +21,8 @@ export default {
     return (dispatch) => {
       return ContactsAPI.create(id, contact)
         .then(() => {
-            dispatch({ type: CREATE_CONTACT_SUCCESS, payload: {id, contact} });
-            dispatch({ type: CLOSE_CONTACT_FORM });
+          dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
+          dispatch({type: CLOSE_CONTACT_FORM});
         })
         .catch((err) => {
           console.log(err);
@@ -35,8 +35,8 @@ export default {
     return (dispatch) => {
       return ContactsAPI.update(id, contact)
         .then(() => {
-          dispatch({ type: UPDATE_CONTACT_SUCCESS, payload: {id, contact} });
-          dispatch({ type: CLOSE_CONTACT_FORM });
+          dispatch({type: UPDATE_CONTACT_SUCCESS, payload: {id, contact}});
+          dispatch({type: CLOSE_CONTACT_FORM});
         })
         .catch((err) => {
           console.log(err);
@@ -46,26 +46,26 @@ export default {
   },
 
   delete(id) {
-      return (dispatch) => {
-        return ContactsAPI.delete(id)
-          .then(() => {
-            dispatch({ type: DELETE_CONTACT_SUCCESS, payload: {id} });
-            dispatch({ type: CLOSE_CONTACT_FORM });
-          })
-          .catch((err) => {
-            console.log(err);
-            // TODO handling request errors
-          });
-      };
+    return (dispatch) => {
+      return ContactsAPI.delete(id)
+        .then(() => {
+          dispatch({type: DELETE_CONTACT_SUCCESS, payload: {id}});
+          dispatch({type: CLOSE_CONTACT_FORM});
+        })
+        .catch((err) => {
+          console.log(err);
+          // TODO handling request errors
+        });
+    };
   },
 
   search(query) {
     return (dispatch) => {
       if (query === '') {
-        dispatch({ type: CLEAR_SEARCH });
+        dispatch({type: CLEAR_SEARCH});
       }
       else {
-        dispatch({ type: SEARCH_BY_CONTACTS, payload: {query} });
+        dispatch({type: SEARCH_BY_CONTACTS, payload: {query}});
       }
     }
   }

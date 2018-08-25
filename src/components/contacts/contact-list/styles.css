@@ -1,4 +1,4 @@
-.contact-list__content{
+.contact-list__content {
     position: relative;
     margin-top: 10px;
     border: 1px solid black;
@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.contact-list__add-button{
+.contact-list__add-button {
     background: rgb(240, 240, 240);
     outline: none;
     border: none;

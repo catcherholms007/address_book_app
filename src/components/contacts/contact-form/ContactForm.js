@@ -1,120 +1,52 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from "react-redux";
-import uuid from 'uuid/v4';
 
 import ContactActions from "../../../actions/contactActions";
 import Email from "./email/Email";
+import ButtonSet from "./button-set/ButtonSet";
+import Name from "./name/Name";
 
 import './styles.css';
-import ButtonSet from "./button-set/ButtonSet";
 
-function getContactFromState(state) {
-  return {
-    name: state.name,
-    email: state.email
-  }
-}
-
-class ContactForm extends Component{
+class ContactForm extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      isNew: true,
-      id: null,
-      name: null,
-      email: null,
-      loading: true,
-      isValid: true
-    };
-
     this.onCancelClick = this.onCancelClick.bind(this);
-    this.onChangeName = this.onChangeName.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
-    this.onSuccessEmailValidation = this.onSuccessEmailValidation.bind(this);
-    this.onErrorValidation = this.onErrorValidation.bind(this);
     this.buttonsData = this.buttonsData.bind(this);
+    this.setEmailRef = this.setEmailRef.bind(this);
+    this.setNameRef = this.setNameRef.bind(this);
   }
 
-  readProps(props) {
-    const id = props.match.params.contactId;
-    if (id in props.contacts.data) {
-      const contact = props.contacts.data[id];
-      this.setState({
-        id: id,
-        name: contact.name,
-        email: contact.email,
-        loading: false,
-        isNew: false,
-      });
+  getValues() {
+    return {
+      name: this.name.value,
+      email: this.email.value
     }
-    else if (id === 'new') {
-      this.setState({
-        isNew: true,
-        id: uuid(),
-        name: '',
-        email: '',
-        loading: false,
-      })
-    }
-    else this.setState({
-        loading: false
-      })
   }
 
   componentDidMount() {
-    if (!this.props.contacts.loading) {
-      this.readProps(this.props);
+    const id = this.props.id;
+    if (id in this.props.contacts.data) {
+      const contact = this.props.contacts.data[id];
+      this.email.value = contact.email;
+      this.name.value = contact.name;
+    }
+    else if (id === 'new') {
+      this.email.value = '';
+      this.name.value = '';
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.page.nextRoute === '/') {
-      this.onCancelClick();
-    }
-    else {
-      this.readProps(nextProps);
-    }
+  setEmailRef(input) {
+    this.email = input;
   }
 
-  onChangeName(event) {
-    const value = event.target.value;
-    this.setState({
-      name: value
-    })
-  }
-
-  onSaveClick() {
-    if (this.state.isNew) {
-      this.props.dispatch(ContactActions.create(this.state.id, getContactFromState(this.state)));
-    }
-    else {
-      this.props.dispatch(ContactActions.update(this.state.id, getContactFromState(this.state)));
-    }
-  }
-
-  onDeleteClick() {
-    this.props.dispatch(ContactActions.delete(this.state.id));
-  }
-
-  onCancelClick() {
-    const {history, match} = this.props;
-    history.replace(match.url.slice(0, match.url.lastIndexOf('/')))
-  }
-
-  onSuccessEmailValidation(value) {
-    this.setState({
-      email: value,
-      isValid: true
-    })
-  }
-
-  onErrorValidation() {
-    this.setState({
-      isValid: false
-    })
+  setNameRef(input) {
+    this.name = input;
   }
 
   buttonsData() {
@@ -123,15 +55,15 @@ class ContactForm extends Component{
         className: 'button-set__delete-button',
         name: 'delete',
         onClick: this.onDeleteClick,
-        isVisible: !this.state.isNew,
+        isVisible: !this.props.isNew,
         type: 'button',
         label: 'Delete'
       },
       {
         className: 'button-set__save-button',
         name: 'save',
-        onClick: this.onCancelClick,
-        isVisible: this.state.isValid,
+        onClick: this.onSaveClick,
+        isVisible: true,
         type: 'submit',
         label: 'Ok'
       },
@@ -146,33 +78,33 @@ class ContactForm extends Component{
     ];
   }
 
+  isValid() {
+    return this.name.isValid() & this.email.isValid();
+  }
+
+  onSaveClick() {
+    if (this.isValid()) {
+      this.props.dispatch(ContactActions[this.props.isNew ? 'create' : 'update'](this.props.id, this.getValues()));
+    }
+  }
+
+  onDeleteClick() {
+    this.props.dispatch(ContactActions.delete(this.props.id));
+  }
+
+  onCancelClick() {
+    const {history, match} = this.props;
+    history.replace(match.url.slice(0, match.url.lastIndexOf('/')))
+  }
 
   render() {
-    if (this.state.loading) {
-      return 'Loading';
-    }
-    else {
-      if (this.state.id) {
-        return (
-          <div className={'contact-form'}>
-            <input
-              name={'name'}
-              value={this.state.name}
-              required
-              onChange={this.onChangeName}
-              placeholder={'Name'}
-            />
-            <Email
-              value={this.state.email}
-              onErrorValidation={this.onErrorValidation}
-              onSuccessValidation={this.onSuccessEmailValidation}
-            />
-            <ButtonSet buttons={this.buttonsData()}/>
-          </div>
-        )
-      }
-      return 'NOT FOUND';
-    }
+    return (
+      <div className={'contact-form'}>
+        <Name ref={this.setNameRef}/>
+        <Email ref={this.setEmailRef}/>
+        <ButtonSet buttons={this.buttonsData()}/>
+      </div>
+    )
   }
 }
 

@@ -10,7 +10,7 @@ export default (state, action) => {
 
   return state.withMutations((map) => {
     clearErrors(map);
-    map.set('loading', meta.loading === undefined ?  false: meta.loading);
+    map.set('loading', meta.loading === undefined ? false : meta.loading);
     if (action.error) {
       try {
         map.set('errorData', Immutable.fromJS(action.payload.body));
@@ -20,9 +20,9 @@ export default (state, action) => {
 
       map.set('error', Immutable.fromJS(action.payload));
     } else if (!meta.loading) {
-        if (action.payload !== undefined) {
-          map.set('data', Immutable.fromJS(action.payload));
-        }
+      if (action.payload !== undefined) {
+        map.set('data', Immutable.fromJS(action.payload));
+      }
     }
   });
 };

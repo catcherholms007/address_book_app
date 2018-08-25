@@ -1,4 +1,4 @@
-.contact-list-item{
+.contact-list-item {
     border-bottom: 1px solid black;
     width: 100%;
     display: flex;
@@ -7,7 +7,7 @@
     padding: 5px;
 }
 
-.contact-list-item__name{
+.contact-list-item__name {
     font-weight: bold;
     color: black;
     display: inline;
@@ -22,12 +22,12 @@ a {
     background-color: rgb(229, 229, 229);
 }
 
-.contact-list-item__actions{
+.contact-list-item__actions {
     display: flex;
     align-content: center;
 }
 
-.contact-list-item__actions button{
+.contact-list-item__actions button {
     background-color: transparent;
     outline: none;
     border: none;

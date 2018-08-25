@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 
@@ -7,7 +7,7 @@ import SearchField from "../search/SearchField";
 
 import './styles.css'
 
-class ContactList extends Component{
+class ContactList extends Component {
 
   render() {
     const {contacts} = this.props;
@@ -16,7 +16,7 @@ class ContactList extends Component{
     }
     return (
       <div className={'contact-list'}>
-        <SearchField />
+        <SearchField/>
         <div className={'contact-list__content'}>
           {Object.keys(contacts.filterQuery !== ''
             ? contacts.filterResult

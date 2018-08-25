@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 
 import contacts from './contactReducer';
 import page from './pageReducer';

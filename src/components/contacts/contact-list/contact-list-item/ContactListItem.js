@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -6,7 +6,7 @@ import ContactActions from "../../../../actions/contactActions";
 
 import './styles.css';
 
-class ContactListItem extends Component{
+class ContactListItem extends Component {
 
   constructor(props) {
     super(props);

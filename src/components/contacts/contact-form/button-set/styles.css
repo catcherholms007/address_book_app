@@ -2,7 +2,7 @@
     margin-top: 20px;
 }
 
-.contact-form__button-set::after{
+.contact-form__button-set::after {
     clear: both;
 }
 
