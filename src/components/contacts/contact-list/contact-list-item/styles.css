@@ -33,3 +33,27 @@ a {
     border: none;
     cursor: pointer;
 }
+
+.contact-list-item__message {
+    font-size: 14px;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: grey;
+}
+
+.contact-list-item__right-part {
+    display: flex;
+    flex-direction: row;
+}
+.contact-list-item__spinner {
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+}
+
+.contact-list-item__spinner svg{
+    height: 20px;
+}

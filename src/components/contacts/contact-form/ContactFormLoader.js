@@ -5,6 +5,8 @@ import uuid from 'uuid/v4';
 import ContactForm from "./ContactForm";
 
 import './styles.css';
+import ContactActions from "../../../actions/contactActions";
+import PageActions from "../../../actions/pageActions";
 
 class ContactFormLoader extends Component {
 
@@ -23,7 +25,6 @@ class ContactFormLoader extends Component {
     if (id in props.contacts.data) {
       this.setState({
         id: id,
-        loading: false,
         isNew: false,
       });
     }
@@ -31,13 +32,11 @@ class ContactFormLoader extends Component {
       this.setState({
         isNew: true,
         id: uuid(),
-        loading: false,
       })
     }
-    else
-      this.setState({
-        loading: false
-      })
+    this.setState({
+      loading: false
+    })
   }
 
   componentDidMount() {
@@ -56,9 +55,14 @@ class ContactFormLoader extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(PageActions.viewMain());
+    this.props.dispatch(ContactActions.research());
+  }
+
   render() {
     if (this.state.loading) {
-      return 'Loading';
+      return 'Loading from data base';
     }
     else {
       if (this.state.id) {

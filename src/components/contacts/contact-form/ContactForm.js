@@ -14,6 +14,10 @@ class ContactForm extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      message: null
+    };
+
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
@@ -30,9 +34,9 @@ class ContactForm extends Component {
   }
 
   componentDidMount() {
-    const id = this.props.id;
-    if (id in this.props.contacts.data) {
-      const contact = this.props.contacts.data[id];
+    const {id, contacts, isNew} = this.props;
+    if (id in contacts.data) {
+      const contact = contacts.data[id];
       this.email.value = contact.email;
       this.name.value = contact.name;
     }
@@ -40,12 +44,7 @@ class ContactForm extends Component {
       this.email.value = '';
       this.name.value = '';
     }
-    this.props.dispatch(PageActions.viewByStatus(this.props.isNew))
-  }
-
-  componentWillUnmount() {
-    this.props.dispatch(PageActions.viewMain());
-    this.props.dispatch(ContactActions.research());
+    this.props.dispatch(PageActions.viewByStatus(isNew))
   }
 
   setEmailRef(input) {
@@ -90,13 +89,20 @@ class ContactForm extends Component {
   }
 
   onSaveClick() {
+    const {isNew, id} = this.props;
     if (this.isValid()) {
-      this.props.dispatch(ContactActions[this.props.isNew ? 'create' : 'update'](this.props.id, this.getValues()));
+      this.props.dispatch(ContactActions[isNew ? 'create' : 'update'](id, this.getValues()));
+      this.setState({
+        message: isNew ? 'Creating' : 'Updating'
+      });
     }
   }
 
   onDeleteClick() {
     this.props.dispatch(ContactActions.delete(this.props.id));
+    this.setState({
+      message: 'Deleting'
+    });
   }
 
   onCancelClick() {
@@ -105,6 +111,9 @@ class ContactForm extends Component {
   }
 
   render() {
+    if (this.state.message) {
+      return this.state.message;
+    }
     return (
       <div className={'contact-form'}>
         <Name ref={this.setNameRef}/>

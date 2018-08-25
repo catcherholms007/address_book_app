@@ -1,15 +1,19 @@
 import React from 'react';
 import {connect} from "react-redux";
 
+import Icon from "../../shared/icons/Icon";
 import ContactActions from '../../../actions/contactActions';
 
 import './styles.css';
-import Icon from "../../shared/icons/Icon";
 
 class SearchField extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false
+    };
 
     this.setRef = this.setRef.bind(this);
     this.onFilterQueryChange = this.onFilterQueryChange.bind(this);
@@ -26,9 +30,15 @@ class SearchField extends React.Component {
 
   onFilterQueryChange(event) {
     const value = event.target.value;
+    this.setState({
+      loading: true
+    });
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      this.props.dispatch(ContactActions.search(value))
+      this.props.dispatch(ContactActions.search(value));
+      this.setState({
+        loading: false
+      });
     }, 500);
   }
 
@@ -48,7 +58,10 @@ class SearchField extends React.Component {
           onChange={this.onFilterQueryChange}
           ref={this.setRef}
         />
-        <Icon name={'search'}/>
+        {this.state.loading
+          ? <Icon name={'spinner'}/>
+          : <Icon name={'search'}/>
+        }
         {this.props.contacts.filterQuery !== '' &&
           <button
             className={'search-container__close-button'}
