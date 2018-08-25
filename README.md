@@ -15,4 +15,4 @@ Additional dependencies
 - immutable
 - uuid
 - react-router-dom
-- normalise.css
+- normalize.css
