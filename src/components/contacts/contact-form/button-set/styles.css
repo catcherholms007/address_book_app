@@ -33,3 +33,18 @@
     background-color: rgb(201, 45, 57);
     color: white;
 }
+
+@media only screen and (max-width: 600px) {
+
+    .contact-form__button-set button {
+        width: 80px;
+    }
+
+    .button-set__save-button {
+        margin-left: 10px;
+    }
+
+    .button-set__cancel-button {
+        margin-left: 10px;
+    }
+}

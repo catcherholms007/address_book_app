@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './styles.css'
 
 const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -50,7 +51,6 @@ export default class Email extends React.Component{
           name={'email'}
           value={this.state.value}
           type={'email'}
-          pattern={emailRegExp}
           onChange={this.onChangeEmail}
           required
           placeholder={'Email'}
