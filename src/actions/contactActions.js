@@ -1,9 +1,10 @@
 import ContactsAPI from '../api/contacts-api';
 import handleHttpAction from '../lib/handle-http-action';
 import {
+  CLEAR_SEARCH,
   CREATE_CONTACT_SUCCESS,
   DELETE_CONTACT_SUCCESS,
-  GET_CONTACTS,
+  GET_CONTACTS, SEARCH_BY_CONTACTS,
   UPDATE_CONTACT_SUCCESS
 } from "../constants/contact-constants";
 import {CLOSE_CONTACT_FORM} from "../constants/page-constants";
@@ -20,8 +21,8 @@ export default {
     return (dispatch) => {
       return ContactsAPI.create(id, contact)
         .then(() => {
-            dispatch({ type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
-            dispatch({ type: CLOSE_CONTACT_FORM});
+            dispatch({ type: CREATE_CONTACT_SUCCESS, payload: {id, contact} });
+            dispatch({ type: CLOSE_CONTACT_FORM });
         })
         .catch((err) => {
           console.log(err);
@@ -34,8 +35,8 @@ export default {
     return (dispatch) => {
       return ContactsAPI.update(id, contact)
         .then(() => {
-          dispatch({ type: UPDATE_CONTACT_SUCCESS, payload: {id, contact}});
-          dispatch({ type: CLOSE_CONTACT_FORM});
+          dispatch({ type: UPDATE_CONTACT_SUCCESS, payload: {id, contact} });
+          dispatch({ type: CLOSE_CONTACT_FORM });
         })
         .catch((err) => {
           console.log(err);
@@ -48,13 +49,25 @@ export default {
       return (dispatch) => {
         return ContactsAPI.delete(id)
           .then(() => {
-            dispatch({ type: DELETE_CONTACT_SUCCESS, payload: {id}});
-            dispatch({ type: CLOSE_CONTACT_FORM});
+            dispatch({ type: DELETE_CONTACT_SUCCESS, payload: {id} });
+            dispatch({ type: CLOSE_CONTACT_FORM });
           })
           .catch((err) => {
             console.log(err);
             // TODO handling request errors
           });
       };
+  },
+
+  search(query) {
+    return (dispatch) => {
+      if (query === '') {
+        dispatch({ type: CLEAR_SEARCH });
+      }
+      else {
+        dispatch({ type: SEARCH_BY_CONTACTS, payload: {query} });
+      }
+    }
   }
+
 };

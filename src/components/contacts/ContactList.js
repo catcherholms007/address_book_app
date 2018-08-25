@@ -3,18 +3,23 @@ import {connect} from "react-redux";
 
 import ContactListItem from "./ContactListItem";
 import {NavLink} from "react-router-dom";
+import SearchField from "./search/SearchField";
 // TODO add styles
 
 class ContactList extends Component{
 
   render() {
-    if (this.props.contacts.loading) {
+    const {contacts} = this.props;
+    if (contacts.loading) {
       return 'LOADING'
     }
     return (
       <div className={'contact-list'}>
-        {Object.keys(this.props.contacts.data)
-          .map(key => Object.assign({id: key}, this.props.contacts.data[key]))
+        <SearchField />
+        {Object.keys(contacts.filterQuery !== ''
+          ? contacts.filterResult
+          : contacts.data)
+          .map(key => Object.assign({id: key}, contacts.data[key]))
           .map(elem => (
             <ContactListItem
               id={elem.id}

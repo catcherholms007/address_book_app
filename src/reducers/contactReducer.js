@@ -1,15 +1,23 @@
 import Immutable from 'immutable';
 
 import {
+  CLEAR_SEARCH,
   CREATE_CONTACT,
   CREATE_CONTACT_SUCCESS,
   DELETE_CONTACT, DELETE_CONTACT_SUCCESS,
-  GET_CONTACTS,
+  GET_CONTACTS, SEARCH_BY_CONTACTS,
   UPDATE_CONTACT, UPDATE_CONTACT_SUCCESS
 } from "../constants/contact-constants";
-import httpReducerHandler, {clearErrors} from '../lib/http-reducer-handler'
+import httpReducerHandler, {clearErrors} from '../lib/http-reducer-handler';
 
-export default (state = Immutable.Map({ data: [], loading: true }), action) => {
+const initialState = {
+  data: [],
+  loading: true,
+  filterQuery: '',
+  filterResult: [],
+};
+
+export default (state = Immutable.Map(initialState), action) => {
   switch (action.type) {
 
     case GET_CONTACTS:
@@ -57,6 +65,22 @@ export default (state = Immutable.Map({ data: [], loading: true }), action) => {
         map.update('data', data => data.remove(action.payload.id));
       });
 
-    default:                       return state;
+    case SEARCH_BY_CONTACTS:
+      return state.withMutations((map) => {
+        const query = action.payload.query;
+        map.set('filterQuery', query);
+        map.set('filterResult', map.get('data').filter(value => {
+          return value.get('name').includes(query) || value.get('email').includes(query);
+        }));
+      });
+
+    case CLEAR_SEARCH:
+      return state.withMutations((map) => {
+        map.set('filterQuery', '');
+        map.set('filterResult', Immutable.fromJS([]));
+      });
+
+    default:
+      return state;
   }
 };
