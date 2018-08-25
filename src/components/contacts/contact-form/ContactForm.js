@@ -44,7 +44,8 @@ class ContactForm extends Component {
   }
 
   componentWillUnmount() {
-      this.props.dispatch(PageActions.viewMain())
+    this.props.dispatch(PageActions.viewMain());
+    this.props.dispatch(ContactActions.research());
   }
 
   setEmailRef(input) {

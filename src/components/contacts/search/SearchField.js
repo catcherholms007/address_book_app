@@ -13,10 +13,15 @@ class SearchField extends React.Component {
 
     this.setRef = this.setRef.bind(this);
     this.onFilterQueryChange = this.onFilterQueryChange.bind(this);
+    this.onClearButtonClick = this.onClearButtonClick.bind(this);
   }
 
   componentDidMount() {
     this.search.value = this.props.contacts.filterQuery
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.search.value = nextProps.contacts.filterQuery;
   }
 
   onFilterQueryChange(event) {
@@ -31,6 +36,10 @@ class SearchField extends React.Component {
     this.search = input;
   }
 
+  onClearButtonClick() {
+    this.props.dispatch(ContactActions.clearSearch())
+  }
+
   render() {
     return (
       <div className={'search-container'}>
@@ -40,6 +49,14 @@ class SearchField extends React.Component {
           ref={this.setRef}
         />
         <Icon name={'search'}/>
+        {this.props.contacts.filterQuery !== '' &&
+          <button
+            className={'search-container__close-button'}
+            onClick={this.onClearButtonClick}
+          >
+            {'X'}
+          </button>
+        }
       </div>
     );
   }

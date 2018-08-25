@@ -5,7 +5,7 @@ import {
   CREATE_CONTACT,
   CREATE_CONTACT_SUCCESS,
   DELETE_CONTACT, DELETE_CONTACT_SUCCESS,
-  GET_CONTACTS, SEARCH_BY_CONTACTS,
+  GET_CONTACTS, RESEARCH_BY_CONTACTS, SEARCH_BY_CONTACTS,
   UPDATE_CONTACT, UPDATE_CONTACT_SUCCESS
 } from "../constants/contact-constants";
 import httpReducerHandler, {clearErrors} from '../lib/http-reducer-handler';
@@ -78,6 +78,14 @@ export default (state = Immutable.Map(initialState), action) => {
       return state.withMutations((map) => {
         map.set('filterQuery', '');
         map.set('filterResult', Immutable.fromJS([]));
+      });
+
+    case RESEARCH_BY_CONTACTS:
+      return state.withMutations((map) => {
+        const query = map.get('filterQuery');
+        map.set('filterResult', map.get('data').filter(value => {
+          return value.get('name').toLowerCase().includes(query) || value.get('email').toLowerCase().includes(query);
+        }));
       });
 
     default:

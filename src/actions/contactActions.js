@@ -5,7 +5,7 @@ import {
   SEARCH_BY_CONTACTS,
   CREATE_CONTACT_SUCCESS,
   DELETE_CONTACT_SUCCESS,
-  UPDATE_CONTACT_SUCCESS
+  UPDATE_CONTACT_SUCCESS, RESEARCH_BY_CONTACTS
 } from "../constants/contact-constants";
 import {CLOSE_CONTACT_FORM} from "../constants/page-constants";
 
@@ -61,6 +61,18 @@ export default {
         dispatch({type: SEARCH_BY_CONTACTS, payload: {query}});
       }
     }
-  }
+  },
+
+  clearSearch() {
+    return (dispatch) => {
+      dispatch({type: CLEAR_SEARCH});
+    }
+  },
+
+  research() {
+    return (dispatch) => {
+      dispatch({type: RESEARCH_BY_CONTACTS});
+    }
+  },
 
 };
