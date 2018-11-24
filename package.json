@@ -16,7 +16,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --config webpack.config.develop.js",
+    "start": "webpack-dev-server --hot --config webpack.config.develop.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build": "webpack --config webpack.config.prod.js -p"
