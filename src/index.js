@@ -7,13 +7,8 @@ import store from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
 import {HashRouter as Router} from "react-router-dom";
 
-let basename = '/address_book_app';
-if (process.env.NODE_ENV !== 'production') {
-  basename = '/'
-}
-
 ReactDOM.render(
-  <Router basename={basename}>
+  <Router>
     <Provider store={store}>
       <App/>
     </Provider>
