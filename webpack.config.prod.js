@@ -7,7 +7,7 @@ const common = require('./webpack.config.common.js');
 
 module.exports = merge(common,{
   output: {
-    path: path.resolve(__dirname, './build'),
+    path: path.resolve(__dirname, './docs'),
     filename: '[name].[hash].js',
   },
   optimization: {
@@ -31,6 +31,6 @@ module.exports = merge(common,{
     }
   },
   plugins: [
-    new CleanWebpackPlugin(['build']),
+    new CleanWebpackPlugin(['docs']),
   ]
 });
