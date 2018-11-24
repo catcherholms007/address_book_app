@@ -5,10 +5,15 @@ import './index.css';
 import App from './App';
 import store from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
-import {BrowserRouter as Router} from "react-router-dom";
+import {HashRouter as Router} from "react-router-dom";
+
+let basename = '/address_book_app';
+if (process.env.NODE_ENV !== 'production') {
+  basename = '/'
+}
 
 ReactDOM.render(
-  <Router basename="/address_book_app">
+  <Router basename={basename}>
     <Provider store={store}>
       <App/>
     </Provider>

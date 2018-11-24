@@ -21,7 +21,10 @@ export default (state, action) => {
       map.set('error', Immutable.fromJS(action.payload));
     } else if (!meta.loading) {
       if (action.payload !== undefined) {
-        map.set('data', Immutable.fromJS(action.payload));
+        const data = action.payload === null
+          ? []
+          : action.payload;
+        map.set('data', Immutable.fromJS(data));
       }
     }
   });
