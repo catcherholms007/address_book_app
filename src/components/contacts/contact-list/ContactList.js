@@ -1,27 +1,24 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
+import {inject, observer} from 'mobx-react';
 
 import ContactListItem from "./contact-list-item/ContactListItem";
 import SearchField from "../search/SearchField";
 
-import './styles.css'
+import './styles.css';
 
 class ContactList extends Component {
 
   render() {
-    const {contacts} = this.props;
-    if (contacts.loading) {
-      return 'LOADING'
-    }
+    const {contacts, filterResult, filterQuery} = this.props.contactStore;
+    console.log('contacts', this.props.contactStore.contacts);
     return (
       <div className={'contact-list'}>
         <SearchField/>
         <div className={'contact-list__content'}>
-          {Object.keys(contacts.filterQuery !== ''
-            ? contacts.filterResult
-            : contacts.data)
-            .map(key => Object.assign({id: key}, contacts.data[key]))
+          {(filterQuery !== ''
+            ? filterResult
+            : contacts)
             .map(elem => (
               <ContactListItem
                 id={elem.id}
@@ -41,10 +38,4 @@ class ContactList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts.toJS()
-  };
-};
-
-export default connect(mapStateToProps)(ContactList);
+export default inject('contactStore')(observer(ContactList));

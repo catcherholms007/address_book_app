@@ -1,17 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
+import {Provider} from 'mobx-react';
 import './index.css';
-import App from './App';
-import store from './redux/store';
+import App from './containters/App';
+import ContactStore from './stores/contactStore';
+import PageStore from './stores/pageStore';
 import registerServiceWorker from './registerServiceWorker';
-import {HashRouter as Router} from "react-router-dom";
+
+const stores = {
+  contactStore: new ContactStore(),
+  pageStore: new PageStore()
+};
 
 ReactDOM.render(
-  <Router>
-    <Provider store={store}>
+    <Provider {...stores} >
       <App/>
     </Provider>
-  </Router>
   , document.getElementById('root'));
 registerServiceWorker();

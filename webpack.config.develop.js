@@ -9,7 +9,7 @@ module.exports = merge(common, {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].[hash].js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   plugins: [
     new CleanWebpackPlugin(['dist']),
   ],

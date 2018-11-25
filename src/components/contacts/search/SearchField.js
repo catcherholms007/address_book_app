@@ -1,9 +1,7 @@
 import React from 'react';
-import {connect} from "react-redux";
+import {inject, observer} from 'mobx-react';
 
 import Icon from "../../shared/icons/Icon";
-import ContactActions from '../../../actions/contactActions';
-
 import './styles.css';
 
 class SearchField extends React.Component {
@@ -21,11 +19,11 @@ class SearchField extends React.Component {
   }
 
   componentDidMount() {
-    this.search.value = this.props.contacts.filterQuery
+    this.search.value = this.props.contactStore.filterQuery
   }
 
   componentWillReceiveProps(nextProps) {
-    this.search.value = nextProps.contacts.filterQuery;
+    this.search.value = nextProps.contactStore.filterQuery;
   }
 
   onFilterQueryChange(event) {
@@ -35,7 +33,7 @@ class SearchField extends React.Component {
     });
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      this.props.dispatch(ContactActions.search(value));
+      this.props.contactStore.search(value);
       this.setState({
         loading: false
       });
@@ -47,7 +45,7 @@ class SearchField extends React.Component {
   }
 
   onClearButtonClick() {
-    this.props.dispatch(ContactActions.clearSearch())
+    this.props.contactStore.clearSearch();
   }
 
   render() {
@@ -62,7 +60,7 @@ class SearchField extends React.Component {
           ? <Icon name={'spinner'}/>
           : <Icon name={'search'}/>
         }
-        {this.props.contacts.filterQuery !== '' &&
+        {this.props.contactStore.filterQuery !== '' &&
           <button
             className={'search-container__close-button'}
             onClick={this.onClearButtonClick}
@@ -75,10 +73,4 @@ class SearchField extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts.toJS()
-  };
-};
-
-export default connect(mapStateToProps)(SearchField);
+export default inject('contactStore')(observer(SearchField));

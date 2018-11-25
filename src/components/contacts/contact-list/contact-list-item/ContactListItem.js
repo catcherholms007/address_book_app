@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
-import {connect} from "react-redux";
+import {inject} from 'mobx-react';
 
 import Icon from "../../../shared/icons/Icon";
 import ContactActions from "../../../../actions/contactActions";
@@ -20,7 +20,11 @@ class ContactListItem extends Component {
   }
 
   onDeleteClick() {
-    this.props.dispatch(ContactActions.delete(this.props.id));
+    // TODO as one action via bus
+    this.props.contactStore.delete(this.props.id)
+      .then(() => {
+        this.props.pageStore.closeContactForm();
+      });
     this.setState({
       message: 'Deleting...'
     })
@@ -61,4 +65,4 @@ class ContactListItem extends Component {
   }
 }
 
-export default connect()(ContactListItem);
+export default inject('contactStore', 'pageStore')(ContactListItem);

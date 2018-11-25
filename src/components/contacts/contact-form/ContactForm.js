@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
+import {inject, observer} from 'mobx-react';
 
 import Name from "./name/Name";
 import Email from "./email/Email";
 import ButtonSet from "./button-set/ButtonSet";
-import PageActions from "../../../actions/pageActions";
 import ContactActions from "../../../actions/contactActions";
 
 import './styles.css';
@@ -34,9 +33,9 @@ class ContactForm extends Component {
   }
 
   componentDidMount() {
-    const {id, contacts, isNew} = this.props;
-    if (id in contacts.data) {
-      const contact = contacts.data[id];
+    const {id, contactStore, isNew} = this.props;
+    if (contactStore.contacts.some(element => element.id === id)) {
+      const contact = contactStore.contacts.find(elem => elem.id === id);
       this.email.value = contact.email;
       this.name.value = contact.name;
     }
@@ -44,7 +43,12 @@ class ContactForm extends Component {
       this.email.value = '';
       this.name.value = '';
     }
-    this.props.dispatch(PageActions.viewByStatus(isNew))
+    if (isNew) {
+      this.props.pageStore.viewNewContactPage();
+    }
+    else {
+      this.props.pageStore.viewEditContactPage();
+    }
   }
 
   setEmailRef(input) {
@@ -124,11 +128,4 @@ class ContactForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts.toJS(),
-    page: state.page.toJS()
-  };
-};
-
-export default connect(mapStateToProps)(ContactForm);
+export default inject('contactStore', 'pageStore')(observer(ContactForm));

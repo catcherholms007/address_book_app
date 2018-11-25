@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 import uuid from 'uuid/v4';
+import {inject, observer} from 'mobx-react';
 
 import ContactForm from "./ContactForm";
 
@@ -22,7 +22,9 @@ class ContactFormLoader extends Component {
 
   readProps(props) {
     const id = props.match.params.contactId;
-    if (id in props.contacts.data) {
+    console.log(props.contactStore.data);
+    console.log(props.contactStore.contacts.some(element => element.id === id));
+    if (props.contactStore.contacts.some(element => element.id === id)) {
       this.setState({
         id: id,
         isNew: false,
@@ -40,13 +42,13 @@ class ContactFormLoader extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.contacts.loading) {
+    if (!this.props.contactStore.loading) {
       this.readProps(this.props);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.page.nextRoute !== '/') {
+    if (nextProps.pageStore.nextRoute !== '/') {
       this.readProps(nextProps);
     }
     else {
@@ -56,8 +58,9 @@ class ContactFormLoader extends Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(PageActions.viewMain());
-    this.props.dispatch(ContactActions.research());
+    this.props.pageStore.viewMainPage();
+    // TODO
+    // this.props.dispatch(ContactActions.research());
   }
 
   render() {
@@ -79,11 +82,5 @@ class ContactFormLoader extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts.toJS(),
-    page: state.page.toJS()
-  };
-};
 
-export default connect(mapStateToProps)(ContactFormLoader);
+export default inject('contactStore', 'pageStore')(observer(ContactFormLoader));
