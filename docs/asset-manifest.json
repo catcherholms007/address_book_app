@@ -1,9 +1,9 @@
 {
-  "main.js": "main.26f0383ddeb55c8c554e.js",
-  "styles.css": "1.26f0383ddeb55c8c554e.css",
-  "styles.js": "styles.26f0383ddeb55c8c554e.js",
-  "./index.html": "./index.html",
-  "favicon.ico": "favicon.ico",
-  "precache-manifest.327c761e7d542f9668334d0a26996f34.js": "precache-manifest.327c761e7d542f9668334d0a26996f34.js",
-  "service-worker.js": "service-worker.js"
+  "main.js": "/main.f728db4e98963025a061.js",
+  "styles.css": "/1.f728db4e98963025a061.css",
+  "styles.js": "/styles.f728db4e98963025a061.js",
+  "./index.html": "/./index.html",
+  "favicon.ico": "/favicon.ico",
+  "precache-manifest.ef2fc2794d50668192838e05f1aa0b7b.js": "/precache-manifest.ef2fc2794d50668192838e05f1aa0b7b.js",
+  "service-worker.js": "/service-worker.js"
 }
