@@ -7,7 +7,7 @@ const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const common = require('./webpack.config.common.js');
 
-const publicPath = '/';
+const publicPath = '/address_book_app/';
 
 module.exports = merge(common,{
   output: {
@@ -42,7 +42,7 @@ module.exports = merge(common,{
       clientsClaim: true,
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'cdn',
-      navigateFallback: '/',
+      navigateFallback: '/address_book_app/',
       navigateFallbackBlacklist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
