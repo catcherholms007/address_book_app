@@ -5,26 +5,17 @@ import {inject, observer} from 'mobx-react';
 import ContactForm from "./ContactForm";
 
 import './styles.css';
-import ContactActions from "../../../actions/contactActions";
-import PageActions from "../../../actions/pageActions";
 
 class ContactFormLoader extends Component {
 
-  constructor(props) {
-    super(props);
+  state = {
+    isNew: true,
+    id: null,
+  };
 
-    this.state = {
-      isNew: true,
-      id: null,
-      loading: true,
-    };
-  }
-
-  readProps(props) {
-    const id = props.match.params.contactId;
-    console.log(props.contactStore.data);
-    console.log(props.contactStore.contacts.some(element => element.id === id));
-    if (props.contactStore.contacts.some(element => element.id === id)) {
+  componentDidMount() {
+    const id = this.props.match.params.contactId;
+    if (this.props.contactStore.contacts.some(element => element.id === id)) {
       this.setState({
         id: id,
         isNew: false,
@@ -36,51 +27,25 @@ class ContactFormLoader extends Component {
         id: uuid(),
       })
     }
-    this.setState({
-      loading: false
-    })
-  }
-
-  componentDidMount() {
-    if (!this.props.contactStore.loading) {
-      this.readProps(this.props);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.pageStore.nextRoute !== '/') {
-      this.readProps(nextProps);
-    }
-    else {
-      const {history, match} = this.props;
-      history.replace(match.url.slice(0, match.url.lastIndexOf('/')))
-    }
   }
 
   componentWillUnmount() {
-    this.props.pageStore.viewMainPage();
     // TODO
     // this.props.dispatch(ContactActions.research());
   }
 
   render() {
-    if (this.state.loading) {
-      return 'Loading from data base';
+    if (this.state.id) {
+      return (
+        <ContactForm
+          {...this.props}
+          id={this.state.id}
+          isNew={this.state.isNew}
+        />
+      );
     }
-    else {
-      if (this.state.id) {
-        return (
-          <ContactForm
-            {...this.props}
-            id={this.state.id}
-            isNew={this.state.isNew}
-          />
-        );
-      }
-      return 'Not Found';
-    }
+    return 'Not Found';
   }
 }
-
 
 export default inject('contactStore', 'pageStore')(observer(ContactFormLoader));

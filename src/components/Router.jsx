@@ -1,15 +1,14 @@
-import {Fragment} from "react";
+import React, {Fragment} from "react";
 import {Route, withRouter} from "react-router-dom";
-import ContactList from "./contacts/contact-list/ContactList";
 import ContactFormLoader from "./contacts/contact-form/ContactFormLoader";
-import React from "react";
+import ContactListBox from "./contacts/contact-list/ContactListBox";
 import {withLoading} from "../hoc/withLoading";
 
 function Router({match}) {
   return (
     <Fragment>
       <Route
-        component={ContactList}
+        component={ContactListBox}
         path={`${match.url}/`}
       />
       <Route

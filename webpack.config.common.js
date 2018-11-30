@@ -40,7 +40,6 @@ module.exports = {
       template: "./index.html",
       filename: "./index.html",
       favicon: './favicon.ico',
-      manifest: './manifest.json'
     }),
     new MiniCssExtractPlugin({
       filename: "[name].[hash].css",

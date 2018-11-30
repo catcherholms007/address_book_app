@@ -1,24 +1,19 @@
 import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
 import {inject} from 'mobx-react';
+import {boundMethod} from 'autobind-decorator'
 
 import Icon from "../../../shared/icons/Icon";
-import ContactActions from "../../../../actions/contactActions";
 
 import './styles.css';
 
 class ContactListItem extends Component {
 
-  constructor(props) {
-    super(props);
+  state = {
+    message: null
+  };
 
-    this.state = {
-      message: null
-    };
-
-    this.onDeleteClick = this.onDeleteClick.bind(this);
-  }
-
+  @boundMethod
   onDeleteClick() {
     // TODO as one action via bus
     this.props.contactStore.delete(this.props.id)

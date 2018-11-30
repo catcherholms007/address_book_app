@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
+import {boundMethod} from 'autobind-decorator';
 
 import Name from "./name/Name";
 import Email from "./email/Email";
@@ -10,20 +11,9 @@ import './styles.css';
 
 class ContactForm extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      message: null
-    };
-
-    this.onCancelClick = this.onCancelClick.bind(this);
-    this.onSaveClick = this.onSaveClick.bind(this);
-    this.onDeleteClick = this.onDeleteClick.bind(this);
-    this.buttonsData = this.buttonsData.bind(this);
-    this.setEmailRef = this.setEmailRef.bind(this);
-    this.setNameRef = this.setNameRef.bind(this);
-  }
+  state = {
+    message: null
+  };
 
   getValues() {
     return {
@@ -51,14 +41,17 @@ class ContactForm extends Component {
     }
   }
 
+  @boundMethod
   setEmailRef(input) {
     this.email = input;
   }
 
+  @boundMethod
   setNameRef(input) {
     this.name = input;
   }
 
+  @boundMethod
   buttonsData() {
     return [
       {
@@ -92,6 +85,7 @@ class ContactForm extends Component {
     return this.name.isValid() & this.email.isValid();
   }
 
+  @boundMethod
   onSaveClick() {
     const {isNew, id} = this.props;
     if (this.isValid()) {
@@ -102,6 +96,7 @@ class ContactForm extends Component {
     }
   }
 
+  @boundMethod
   onDeleteClick() {
     this.props.dispatch(ContactActions.delete(this.props.id));
     this.setState({
@@ -109,6 +104,7 @@ class ContactForm extends Component {
     });
   }
 
+  @boundMethod
   onCancelClick() {
     const {history, match} = this.props;
     history.replace(match.url.slice(0, match.url.lastIndexOf('/')))

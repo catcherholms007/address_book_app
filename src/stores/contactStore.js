@@ -1,4 +1,6 @@
-import {observable, action, ObservableMap, computed, values} from 'mobx';
+import {observable, action, toJS, computed, values} from 'mobx';
+import worker from '../worker/worker.js';
+import WebWorker from '../worker/workerSetup';
 import ContactsAPI from '../api/contacts-api'
 
 class ContactStore {
@@ -6,7 +8,22 @@ class ContactStore {
   @observable loading = true;
   @observable filterQuery = '';
   @observable filterResult = [];
+  @observable filtering = false;
 
+  constructor() {
+    this.worker = new WebWorker(worker);
+    this.worker.addEventListener('message', event => {
+      const data = event.data.payload;
+      const type = event.data.type;
+      switch (type) {
+        case 'FILTER_RESULT' : {
+          this.filterResult = data.filterResult;
+          this.filtering = false;
+          break;
+        }
+      }
+    });
+  }
 
   @action
   fetchContacts() {
@@ -20,8 +37,6 @@ class ContactStore {
         this.contacts.push(Object.assign(value, {id}));
       }
       this.loading = false;
-      console.log(this.loading);
-      console.log(this.contacts);
     });
   }
 
@@ -30,23 +45,47 @@ class ContactStore {
     this.contacts.push(contact);
   }
 
-  @action
+  @action.bound
   search(query) {
+    this.filtering = true;
     if (query === '') {
       this.clearSearch();
     }
     else {
       this.filterQuery = query;
-      const lowerCase = query.toLowerCase();
-      this.filterResult = this.contacts.filter(element => element.name.toLowerCase().includes(lowerCase)
-      && element.email.toLowerCase().includes(lowerCase));
+      this.worker.postMessage({
+        type: 'FILTER',
+        payload: {
+          query,
+          contacts: toJS(this.contacts)
+        }
+      });
     }
   }
 
-  @action
+  @action.bound
   clearSearch() {
     this.filterQuery = '';
     this.filterResult = [];
+    this.filtering = false;
+  }
+
+  @action
+  create(id, contact) {
+    return ContactsAPI.create(id, contact)
+      .then(() => {
+        // dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
+        // dispatch({type: CLOSE_CONTACT_FORM});
+      })
+  }
+
+  @action
+  update(id, contact) {
+    return ContactsAPI.update(id, contact)
+      .then(() => {
+        // dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
+        // dispatch({type: CLOSE_CONTACT_FORM});
+      })
   }
 
   @action
