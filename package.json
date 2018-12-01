@@ -6,7 +6,6 @@
   "dependencies": {
     "autobind-decorator": "^2.3.1",
     "firebase": "^5.5.9",
-    "immutable": "^3.8.2",
     "lodash": "^4.17.11",
     "mobx": "^5.6.0",
     "mobx-react": "^5.4.2",
@@ -15,8 +14,6 @@
     "react-dom": "^16.6.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0",
     "uuid": "^3.3.2"
   },
   "scripts": {

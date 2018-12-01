@@ -5,7 +5,6 @@ import {boundMethod} from 'autobind-decorator';
 import Name from "./name/Name";
 import Email from "./email/Email";
 import ButtonSet from "./button-set/ButtonSet";
-import ContactActions from "../../../actions/contactActions";
 
 import './styles.css';
 
