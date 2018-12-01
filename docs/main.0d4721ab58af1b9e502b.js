@@ -31357,7 +31357,9 @@ function () {
           return element.id === id;
         });
 
-        _this4.contacts[contactLocal] = contact;
+        _this4.contacts[contactLocal] = Object.assign(contact, {
+          id: id
+        });
       });
     }
   }, {

@@ -103,7 +103,7 @@ class ContactStore {
     return ContactsAPI.update(id, contact)
       .then(() => {
         let contactLocal = this.contacts.findIndex(element => element.id === id);
-        this.contacts[contactLocal] = contact;
+        this.contacts[contactLocal] = Object.assign(contact, {id});
       })
   }
 
