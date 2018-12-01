@@ -13,13 +13,6 @@ class ContactForm extends Component {
     message: null,
   };
 
-  getValues() {
-    return {
-      name: this.name.value,
-      email: this.email.value,
-    };
-  }
-
   componentDidMount() {
     const { id, contactStore, isNew } = this.props;
     if (contactStore.contacts.some(element => element.id === id)) {
@@ -35,6 +28,44 @@ class ContactForm extends Component {
     } else {
       this.props.pageStore.viewEditContactPage();
     }
+  }
+
+  @boundMethod
+  onSaveClick() {
+    const { isNew, id } = this.props;
+    if (this.isValid()) {
+      this.setState({
+        message: isNew ? 'Creating' : 'Updating',
+      });
+      this.props.contactStore[isNew ? 'create' : 'update'](
+        id,
+        this.getValues(),
+      ).then(() => {
+        this.navigateToMainPage();
+      });
+    }
+  }
+
+  @boundMethod
+  onDeleteClick() {
+    this.setState({
+      message: 'Deleting',
+    });
+    this.props.contactStore.delete(this.props.id).then(() => {
+      this.navigateToMainPage();
+    });
+  }
+
+  getValues() {
+    return {
+      name: this.name.value,
+      email: this.email.value,
+    };
+  }
+
+  @boundMethod
+  onCancelClick() {
+    this.navigateToMainPage();
   }
 
   @boundMethod
@@ -55,7 +86,6 @@ class ContactForm extends Component {
         name: 'delete',
         onClick: this.onDeleteClick,
         isVisible: !this.props.isNew,
-        type: 'button',
         label: 'Delete',
       },
       {
@@ -63,7 +93,6 @@ class ContactForm extends Component {
         name: 'save',
         onClick: this.onSaveClick,
         isVisible: true,
-        type: 'submit',
         label: 'Ok',
       },
       {
@@ -71,7 +100,6 @@ class ContactForm extends Component {
         name: 'cancel',
         onClick: this.onCancelClick,
         isVisible: true,
-        type: 'button',
         label: 'Cancel',
       },
     ];
@@ -81,40 +109,9 @@ class ContactForm extends Component {
     return this.name.isValid() & this.email.isValid();
   }
 
-  @boundMethod
-  onSaveClick() {
-    const { isNew, id } = this.props;
-    if (this.isValid()) {
-      this.setState({
-        message: isNew ? 'Creating' : 'Updating',
-      });
-      this.props.contactStore[isNew ? 'create' : 'update'](
-        id,
-        this.getValues(),
-      ).then(() => {
-        this.navigateToMainPage();
-      });
-    }
-  }
-
   navigateToMainPage() {
     const { history, match } = this.props;
     history.replace(match.url.slice(0, match.url.lastIndexOf('/')));
-  }
-
-  @boundMethod
-  onDeleteClick() {
-    this.setState({
-      message: 'Deleting',
-    });
-    this.props.contactStore.delete(this.props.id).then(() => {
-      this.navigateToMainPage();
-    });
-  }
-
-  @boundMethod
-  onCancelClick() {
-    this.navigateToMainPage();
   }
 
   render() {

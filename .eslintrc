@@ -6,11 +6,12 @@
   "parser": "babel-eslint",
   "extends": ["airbnb"],
   "rules": {
-    "quotes": "off",
+    "quotes": ["error", "single"],
     "no-plusplus": "off",
     "linebreak-style": "off",
     "object-curly-newline": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }]
   },
   "env": {
     "browser": true

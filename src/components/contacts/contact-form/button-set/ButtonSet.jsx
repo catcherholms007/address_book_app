@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './styles.css';
 
@@ -11,7 +12,7 @@ function ButtonSet({ buttons }) {
           <button
             className={button.className}
             key={`button_${button.name}`}
-            type={button.type}
+            type="button"
             name={button.name}
             onClick={button.onClick}
           >
@@ -21,5 +22,9 @@ function ButtonSet({ buttons }) {
     </div>
   );
 }
+
+ButtonSet.propTypes = {
+  buttons: PropTypes.shape().isRequired,
+};
 
 export default ButtonSet;
