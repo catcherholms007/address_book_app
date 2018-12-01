@@ -30,8 +30,7 @@ class ContactFormLoader extends Component {
   }
 
   componentWillUnmount() {
-    // TODO
-    // this.props.dispatch(ContactActions.research());
+    this.props.contactStore.research();
   }
 
   render() {

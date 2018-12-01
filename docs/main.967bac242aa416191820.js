@@ -30364,21 +30364,33 @@ function (_Component) {
   }, {
     key: "onSaveClick",
     value: function onSaveClick() {
+      var _this2 = this;
+
       var _this$props2 = this.props,
           isNew = _this$props2.isNew,
           id = _this$props2.id;
 
       if (this.isValid()) {
-        this.props.dispatch(contactActions[isNew ? 'create' : 'update'](id, this.getValues()));
         this.setState({
           message: isNew ? 'Creating' : 'Updating'
+        });
+        this.props.contactStore[isNew ? 'create' : 'update'](id, this.getValues()).then(function () {
+          _this2.navigateToMainPage();
         });
       }
     }
   }, {
+    key: "navigateToMainPage",
+    value: function navigateToMainPage() {
+      var _this$props3 = this.props,
+          history = _this$props3.history,
+          match = _this$props3.match;
+      history.replace(match.url.slice(0, match.url.lastIndexOf('/')));
+    }
+  }, {
     key: "onDeleteClick",
     value: function onDeleteClick() {
-      this.props.dispatch(contactActions.delete(this.props.id));
+      this.props.contactStore.delete(this.props.id);
       this.setState({
         message: 'Deleting'
       });
@@ -30386,10 +30398,7 @@ function (_Component) {
   }, {
     key: "onCancelClick",
     value: function onCancelClick() {
-      var _this$props3 = this.props,
-          history = _this$props3.history,
-          match = _this$props3.match;
-      history.replace(match.url.slice(0, match.url.lastIndexOf('/')));
+      this.navigateToMainPage();
     }
   }, {
     key: "render",
@@ -30485,8 +30494,8 @@ function (_Component) {
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {// TODO
-      // this.props.dispatch(ContactActions.research());
+    value: function componentWillUnmount() {
+      this.props.contactStore.research();
     }
   }, {
     key: "render",
@@ -30693,8 +30702,56 @@ var search_styles = __webpack_require__(41);
 var debounce = __webpack_require__(21);
 var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce);
 
+// CONCATENATED MODULE: ./src/hoc/withReloadLoading.js
+function withReloadLoading_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { withReloadLoading_typeof = function _typeof(obj) { return typeof obj; }; } else { withReloadLoading_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return withReloadLoading_typeof(obj); }
+
+function withReloadLoading_extends() { withReloadLoading_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return withReloadLoading_extends.apply(this, arguments); }
+
+function withReloadLoading_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function withReloadLoading_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function withReloadLoading_createClass(Constructor, protoProps, staticProps) { if (protoProps) withReloadLoading_defineProperties(Constructor.prototype, protoProps); if (staticProps) withReloadLoading_defineProperties(Constructor, staticProps); return Constructor; }
+
+function withReloadLoading_possibleConstructorReturn(self, call) { if (call && (withReloadLoading_typeof(call) === "object" || typeof call === "function")) { return call; } return withReloadLoading_assertThisInitialized(self); }
+
+function withReloadLoading_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function withReloadLoading_getPrototypeOf(o) { withReloadLoading_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return withReloadLoading_getPrototypeOf(o); }
+
+function withReloadLoading_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) withReloadLoading_setPrototypeOf(subClass, superClass); }
+
+function withReloadLoading_setPrototypeOf(o, p) { withReloadLoading_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return withReloadLoading_setPrototypeOf(o, p); }
+
+
+function withReloadLoading(store, property, Clazz) {
+  return (
+    /*#__PURE__*/
+    function (_Component) {
+      withReloadLoading_inherits(ReLoader, _Component);
+
+      function ReLoader() {
+        withReloadLoading_classCallCheck(this, ReLoader);
+
+        return withReloadLoading_possibleConstructorReturn(this, withReloadLoading_getPrototypeOf(ReLoader).apply(this, arguments));
+      }
+
+      withReloadLoading_createClass(ReLoader, [{
+        key: "render",
+        value: function render() {
+          var changedProperty = this.props[store][property];
+          return react_default.a.createElement(Clazz, withReloadLoading_extends({}, this.props, {
+            changedProperty: changedProperty
+          }));
+        }
+      }]);
+
+      return ReLoader;
+    }(react["Component"])
+  );
+}
 // CONCATENATED MODULE: ./src/components/contacts/search/SearchInput.jsx
-var SearchInput_class;
+var SearchInput_class, _class2;
 
 function SearchInput_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { SearchInput_typeof = function _typeof(obj) { return typeof obj; }; } else { SearchInput_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return SearchInput_typeof(obj); }
 
@@ -30720,6 +30777,7 @@ function SearchInput_applyDecoratedDescriptor(target, property, decorators, desc
 
 
 
+
 var SearchInput_SearchInput = (SearchInput_class =
 /*#__PURE__*/
 function (_Component) {
@@ -30738,9 +30796,51 @@ function (_Component) {
       this.search = debounce_default()(this.props.contactStore.search, 700);
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var query = this.props.contactStore.filterQuery;
+
+      if (this.searchElement.value !== query) {
+        this.searchElement.value = query;
+      }
+    }
+  }, {
     key: "onFilterQueryChange",
     value: function onFilterQueryChange(event) {
       this.search(event.target.value);
+    }
+  }, {
+    key: "setRef",
+    value: function setRef(element) {
+      this.searchElement = element.getValue();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react_default.a.createElement(SearchInput_PureInput, {
+        onChange: this.onFilterQueryChange,
+        ref: this.setRef
+      });
+    }
+  }]);
+
+  return SearchInput;
+}(react["Component"]), (SearchInput_applyDecoratedDescriptor(SearchInput_class.prototype, "onFilterQueryChange", [boundMethod], Object.getOwnPropertyDescriptor(SearchInput_class.prototype, "onFilterQueryChange"), SearchInput_class.prototype), SearchInput_applyDecoratedDescriptor(SearchInput_class.prototype, "setRef", [boundMethod], Object.getOwnPropertyDescriptor(SearchInput_class.prototype, "setRef"), SearchInput_class.prototype)), SearchInput_class);
+var SearchInput_PureInput = (_class2 =
+/*#__PURE__*/
+function (_PureComponent) {
+  SearchInput_inherits(PureInput, _PureComponent);
+
+  function PureInput() {
+    SearchInput_classCallCheck(this, PureInput);
+
+    return SearchInput_possibleConstructorReturn(this, SearchInput_getPrototypeOf(PureInput).apply(this, arguments));
+  }
+
+  SearchInput_createClass(PureInput, [{
+    key: "getValue",
+    value: function getValue() {
+      return this.searchElement;
     }
   }, {
     key: "setRef",
@@ -30752,15 +30852,15 @@ function (_Component) {
     value: function render() {
       return react_default.a.createElement("input", {
         type: 'text',
-        onChange: this.onFilterQueryChange,
+        onChange: this.props.onChange,
         ref: this.setRef
       });
     }
   }]);
 
-  return SearchInput;
-}(react["Component"]), (SearchInput_applyDecoratedDescriptor(SearchInput_class.prototype, "onFilterQueryChange", [boundMethod], Object.getOwnPropertyDescriptor(SearchInput_class.prototype, "onFilterQueryChange"), SearchInput_class.prototype), SearchInput_applyDecoratedDescriptor(SearchInput_class.prototype, "setRef", [boundMethod], Object.getOwnPropertyDescriptor(SearchInput_class.prototype, "setRef"), SearchInput_class.prototype)), SearchInput_class);
-/* harmony default export */ var search_SearchInput = (inject('contactStore')(observer(SearchInput_SearchInput)));
+  return PureInput;
+}(react["PureComponent"]), (SearchInput_applyDecoratedDescriptor(_class2.prototype, "setRef", [boundMethod], Object.getOwnPropertyDescriptor(_class2.prototype, "setRef"), _class2.prototype)), _class2);
+/* harmony default export */ var search_SearchInput = (inject('contactStore')(observer(withReloadLoading('contactStore', 'filterQuery', SearchInput_SearchInput))));
 // CONCATENATED MODULE: ./src/components/shared/icons/Icon.js
 
 var icons = {
@@ -31220,7 +31320,7 @@ var WebWorker = function WebWorker(worker) {
 
 
 // CONCATENATED MODULE: ./src/stores/contactStore.js
-var _dec, _dec2, contactStore_class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
+var _dec, _dec2, _dec3, contactStore_class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -31238,7 +31338,7 @@ function _initializerWarningHelper(descriptor, context) { throw new Error('Decor
 
 
 
-var contactStore_ContactStore = (_dec = mobx_module["d" /* action */].bound, _dec2 = mobx_module["d" /* action */].bound, (contactStore_class =
+var contactStore_ContactStore = (_dec = mobx_module["d" /* action */].bound, _dec2 = mobx_module["d" /* action */].bound, _dec3 = mobx_module["d" /* action */].bound, (contactStore_class =
 /*#__PURE__*/
 function () {
   function ContactStore() {
@@ -31321,6 +31421,23 @@ function () {
       }
     }
   }, {
+    key: "research",
+    value: function research() {
+      this.filtering = true;
+
+      if (this.filterQuery === '') {
+        this.clearSearch();
+      } else {
+        this.worker.postMessage({
+          type: 'FILTER',
+          payload: {
+            query: this.filterQuery,
+            contacts: Object(mobx_module["m" /* toJS */])(this.contacts)
+          }
+        });
+      }
+    }
+  }, {
     key: "clearSearch",
     value: function clearSearch() {
       this.filterQuery = '';
@@ -31330,28 +31447,38 @@ function () {
   }, {
     key: "create",
     value: function create(id, contact) {
-      return contacts_api.create(id, contact).then(function () {// dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
-        // dispatch({type: CLOSE_CONTACT_FORM});
+      var _this3 = this;
+
+      return contacts_api.create(id, contact).then(function () {
+        _this3.contacts.push(Object.assign(contact, {
+          id: id
+        }));
       });
     }
   }, {
     key: "update",
     value: function update(id, contact) {
-      return contacts_api.update(id, contact).then(function () {// dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
-        // dispatch({type: CLOSE_CONTACT_FORM});
+      var _this4 = this;
+
+      return contacts_api.update(id, contact).then(function () {
+        var contactLocal = _this4.contacts.findIndex(function (element) {
+          return element.id === id;
+        });
+
+        _this4.contacts[contactLocal] = contact;
       });
     }
   }, {
     key: "delete",
     value: function _delete(id) {
-      var _this3 = this;
+      var _this5 = this;
 
       return contacts_api.delete(id).then(function () {
-        var index = _this3.contacts.findIndex(function (element) {
+        var index = _this5.contacts.findIndex(function (element) {
           return element.id === id;
         });
 
-        _this3.contacts.splice(index, 1);
+        _this5.contacts.splice(index, 1);
       });
     }
   }]);
@@ -31392,7 +31519,7 @@ function () {
   initializer: function initializer() {
     return false;
   }
-}), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "fetchContacts", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "fetchContacts"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "add", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "add"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "search", [_dec], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "search"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "clearSearch", [_dec2], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "clearSearch"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "create", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "create"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "update", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "update"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "delete", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "delete"), contactStore_class.prototype)), contactStore_class));
+}), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "fetchContacts", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "fetchContacts"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "add", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "add"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "search", [_dec], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "search"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "research", [_dec2], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "research"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "clearSearch", [_dec3], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "clearSearch"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "create", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "create"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "update", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "update"), contactStore_class.prototype), contactStore_applyDecoratedDescriptor(contactStore_class.prototype, "delete", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(contactStore_class.prototype, "delete"), contactStore_class.prototype)), contactStore_class));
 /* harmony default export */ var contactStore = (contactStore_ContactStore);
 // CONCATENATED MODULE: ./src/stores/pageStore.js
 var pageStore_class, pageStore_descriptor, pageStore_descriptor2;

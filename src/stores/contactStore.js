@@ -1,9 +1,10 @@
-import {observable, action, toJS, computed, values} from 'mobx';
+import {observable, action, toJS} from 'mobx';
 import worker from '../worker/worker.js';
 import WebWorker from '../worker/workerSetup';
 import ContactsAPI from '../api/contacts-api'
 
 class ContactStore {
+
   @observable contacts = [];
   @observable loading = true;
   @observable filterQuery = '';
@@ -66,6 +67,23 @@ class ContactStore {
   }
 
   @action.bound
+  research() {
+    this.filtering = true;
+    if (this.filterQuery === '') {
+      this.clearSearch();
+    }
+    else {
+      this.worker.postMessage({
+        type: 'FILTER',
+        payload: {
+          query: this.filterQuery,
+          contacts: toJS(this.contacts)
+        }
+      });
+    }
+  }
+
+  @action.bound
   clearSearch() {
     this.filterQuery = '';
     this.filterResult = [];
@@ -76,8 +94,7 @@ class ContactStore {
   create(id, contact) {
     return ContactsAPI.create(id, contact)
       .then(() => {
-        // dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
-        // dispatch({type: CLOSE_CONTACT_FORM});
+          this.contacts.push(Object.assign(contact, {id}));
       })
   }
 
@@ -85,8 +102,8 @@ class ContactStore {
   update(id, contact) {
     return ContactsAPI.update(id, contact)
       .then(() => {
-        // dispatch({type: CREATE_CONTACT_SUCCESS, payload: {id, contact}});
-        // dispatch({type: CLOSE_CONTACT_FORM});
+        let contactLocal = this.contacts.findIndex(element => element.id === id);
+        this.contacts[contactLocal] = contact;
       })
   }
 

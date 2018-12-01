@@ -89,16 +89,25 @@ class ContactForm extends Component {
   onSaveClick() {
     const {isNew, id} = this.props;
     if (this.isValid()) {
-      this.props.dispatch(ContactActions[isNew ? 'create' : 'update'](id, this.getValues()));
       this.setState({
         message: isNew ? 'Creating' : 'Updating'
       });
+      this.props.contactStore[isNew ? 'create' : 'update'](id, this.getValues())
+        .then(() => {
+          this.navigateToMainPage();
+        })
+
     }
+  }
+
+  navigateToMainPage() {
+    const {history, match} = this.props;
+    history.replace(match.url.slice(0, match.url.lastIndexOf('/')))
   }
 
   @boundMethod
   onDeleteClick() {
-    this.props.dispatch(ContactActions.delete(this.props.id));
+    this.props.contactStore.delete(this.props.id);
     this.setState({
       message: 'Deleting'
     });
@@ -106,8 +115,7 @@ class ContactForm extends Component {
 
   @boundMethod
   onCancelClick() {
-    const {history, match} = this.props;
-    history.replace(match.url.slice(0, match.url.lastIndexOf('/')))
+    this.navigateToMainPage();
   }
 
   render() {
