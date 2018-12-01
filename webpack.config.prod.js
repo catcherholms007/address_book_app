@@ -37,10 +37,10 @@ function getServedPath(appPackageJson) {
 }
 
 const servedPath = getServedPath(resolveApp('package.json'));
-
 const publicPath = servedPath;
 
 const publicUrl = publicPath.slice(0, -1);
+const useSourceMap = false;
 
 module.exports = merge(common,{
   //Fail out on the first error instead of tolerating it
@@ -51,6 +51,7 @@ module.exports = merge(common,{
     publicPath: '/address_book_app/',
     pathinfo: false
   },
+  devtool: useSourceMap? 'source-map': false,
   optimization: {
     minimize: true,
     minimizer: [
@@ -95,7 +96,7 @@ module.exports = merge(common,{
         parallel: true,
         // Enable file caching
         cache: true,
-        sourceMap: false,
+        sourceMap: useSourceMap,
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessorOptions: {
