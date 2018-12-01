@@ -95,7 +95,7 @@ module.exports = merge(common,{
         // Default number of concurrent runs: os.cpus().length - 1
         parallel: true,
         // Enable file caching
-        cache: true,
+        cache: false,
         sourceMap: useSourceMap,
       }),
       new OptimizeCssAssetsPlugin({
@@ -123,14 +123,14 @@ module.exports = merge(common,{
     // },
     splitChunks: {
       chunks: 'all',
-      cacheGroups: {
-        styles: {
-          name: 'styles',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true
-        }
-      }
+      // cacheGroups: {
+      //   styles: {
+      //     name: 'styles',
+      //     test: /\.css$/,
+      //     chunks: 'all',
+      //     enforce: true
+      //   }
+      // }
     },
     // Keep the runtime chunk seperated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
