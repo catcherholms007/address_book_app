@@ -30792,16 +30792,17 @@ function (_Component) {
   SearchInput_createClass(SearchInput, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.searchElement.value = this.props.contactStore.filterQuery;
+      this.searchElement.getValue().value = this.props.contactStore.filterQuery;
       this.search = debounce_default()(this.props.contactStore.search, 700);
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
       var query = this.props.contactStore.filterQuery;
+      var searchElementValue = this.searchElement.getValue().value;
 
-      if (this.searchElement.value !== query) {
-        this.searchElement.value = query;
+      if (searchElementValue !== query) {
+        this.searchElement.getValue().value = query;
       }
     }
   }, {
@@ -30812,7 +30813,7 @@ function (_Component) {
   }, {
     key: "setRef",
     value: function setRef(element) {
-      this.searchElement = element.getValue();
+      this.searchElement = element;
     }
   }, {
     key: "render",
