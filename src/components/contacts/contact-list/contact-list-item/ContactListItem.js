@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavLink} from "react-router-dom";
+import NavLink from "react-router-dom/NavLink";
 import {inject} from 'mobx-react';
 import {boundMethod} from 'autobind-decorator'
 

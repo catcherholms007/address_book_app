@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter as Router} from "react-router-dom";
+import HashRouter from "react-router-dom/HashRouter";
 import 'normalize.css';
 
 import Header from "../components/header/Header";
@@ -10,9 +10,9 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      <Router>
+      <HashRouter>
         <BodyContent/>
-      </Router>
+      </HashRouter>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {NavLink} from "react-router-dom";
+import React from 'react';
+import NavLink from "react-router-dom/NavLink";
 import {inject, observer} from 'mobx-react';
 
 import SearchField from "../search/SearchField";
