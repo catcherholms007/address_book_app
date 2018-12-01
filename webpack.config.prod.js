@@ -32,27 +32,19 @@ function getServedPath(appPackageJson) {
     envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
   return ensureSlash(servedUrl, true);
 }
-const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 
 const servedPath = getServedPath(resolveApp('package.json'));
 
-const isEnvProduction = true;
-const isEnvDevelopment = false;
+const publicPath = servedPath;
 
-const publicPath = isEnvProduction
-  ? servedPath
-  : isEnvDevelopment && '/';
-
-const publicUrl = isEnvProduction
-  ? publicPath.slice(0, -1)
-  : isEnvDevelopment && '';
+const publicUrl = publicPath.slice(0, -1);
 
 module.exports = merge(common,{
   output: {
     path: path.resolve(__dirname, './docs'),
     filename: '[name].[hash].js',
     publicPath: '/address_book_app/',
-    pathinfo: isEnvDevelopment
+    pathinfo: false
   },
   optimization: {
     minimize: true,
@@ -83,7 +75,7 @@ module.exports = merge(common,{
       clientsClaim: true,
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'cdn',
-      // navigateFallback: publicUrl + '/',
+      navigateFallback: publicUrl + '/',
       navigateFallbackBlacklist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
