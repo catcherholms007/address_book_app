@@ -6,6 +6,7 @@ import Router from "../components/Router";
 class BodyContent extends Component{
 
   componentDidMount() {
+    this.props.contactStore.initWorker();
     this.props.contactStore.fetchContacts();
   }
 

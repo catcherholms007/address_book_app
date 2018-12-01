@@ -11,7 +11,7 @@ class ContactStore {
   @observable filterResult = [];
   @observable filtering = false;
 
-  constructor() {
+  initWorker() {
     this.worker = new WebWorker(worker);
     this.worker.addEventListener('message', event => {
       const data = event.data.payload;
