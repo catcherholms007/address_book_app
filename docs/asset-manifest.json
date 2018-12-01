@@ -1,10 +1,11 @@
 {
-  "main.js": "/address_book_app/main.1e8321c28413f483f35e.js",
-  "styles.css": "/address_book_app/1.1e8321c28413f483f35e.css",
-  "styles.js": "/address_book_app/styles.1e8321c28413f483f35e.js",
-  "vendors~main.js": "/address_book_app/vendors~main.1e8321c28413f483f35e.js",
+  "main.js": "/address_book_app/main.e80011208aebe0c295d0.js",
+  "runtime~main.js": "/address_book_app/runtime~main.e80011208aebe0c295d0.js",
+  "styles.css": "/address_book_app/2.e80011208aebe0c295d0.css",
+  "styles.js": "/address_book_app/styles.e80011208aebe0c295d0.js",
+  "vendors~main.js": "/address_book_app/vendors~main.e80011208aebe0c295d0.js",
   "./index.html": "/address_book_app/./index.html",
   "favicon.ico": "/address_book_app/favicon.ico",
-  "precache-manifest.4b52b4a38d91eb350da4f22483fc3775.js": "/address_book_app/precache-manifest.4b52b4a38d91eb350da4f22483fc3775.js",
+  "precache-manifest.890812071b46f82bdac4a3ec71fa433b.js": "/address_book_app/precache-manifest.890812071b46f82bdac4a3ec71fa433b.js",
   "service-worker.js": "/address_book_app/service-worker.js"
 }
