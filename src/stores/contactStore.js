@@ -29,12 +29,14 @@ class ContactStore {
   fetchContacts() {
     ContactsAPI.get().then(snapshot => {
       let data = snapshot.val();
-      const keys = Object.keys(data);
-      const keysCount = keys.length;
-      for (let i = 0; i < keysCount; i++) {
-        const id = keys[i];
-        const value = data[id];
-        this.contacts.push(Object.assign(value, {id}));
+      if (data) {
+        const keys = Object.keys(data);
+        const keysCount = keys.length;
+        for (let i = 0; i < keysCount; i++) {
+          const id = keys[i];
+          const value = data[id];
+          this.contacts.push(Object.assign(value, {id}));
+        }
       }
       this.loading = false;
     });

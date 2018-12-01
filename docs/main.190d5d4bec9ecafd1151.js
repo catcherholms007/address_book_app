@@ -31279,16 +31279,19 @@ function () {
 
       contacts_api.get().then(function (snapshot) {
         var data = snapshot.val();
-        var keys = Object.keys(data);
-        var keysCount = keys.length;
 
-        for (var i = 0; i < keysCount; i++) {
-          var id = keys[i];
-          var value = data[id];
+        if (data) {
+          var keys = Object.keys(data);
+          var keysCount = keys.length;
 
-          _this2.contacts.push(Object.assign(value, {
-            id: id
-          }));
+          for (var i = 0; i < keysCount; i++) {
+            var id = keys[i];
+            var value = data[id];
+
+            _this2.contacts.push(Object.assign(value, {
+              id: id
+            }));
+          }
         }
 
         _this2.loading = false;
