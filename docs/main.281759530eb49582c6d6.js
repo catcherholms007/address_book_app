@@ -30216,9 +30216,13 @@ function (_Component) {
   }, {
     key: "onDeleteClick",
     value: function onDeleteClick() {
-      this.props.contactStore.delete(this.props.id);
+      var _this3 = this;
+
       this.setState({
         message: 'Deleting'
+      });
+      this.props.contactStore.delete(this.props.id).then(function () {
+        _this3.navigateToMainPage();
       });
     }
   }, {

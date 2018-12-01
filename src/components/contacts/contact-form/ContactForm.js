@@ -106,10 +106,13 @@ class ContactForm extends Component {
 
   @boundMethod
   onDeleteClick() {
-    this.props.contactStore.delete(this.props.id);
     this.setState({
       message: 'Deleting'
     });
+    this.props.contactStore.delete(this.props.id)
+      .then(() => {
+        this.navigateToMainPage();
+      });
   }
 
   @boundMethod
