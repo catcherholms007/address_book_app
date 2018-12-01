@@ -50,7 +50,8 @@ module.exports = merge(common,{
   output: {
     path: path.resolve(__dirname, './docs'),
     filename: '[name].[hash].js',
-    publicPath
+    publicPath: '/address_book_app/',
+    pathinfo: isEnvDevelopment
   },
   optimization: {
     minimize: true,
@@ -81,7 +82,7 @@ module.exports = merge(common,{
       clientsClaim: true,
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'cdn',
-      navigateFallback: publicUrl + '/',
+      // navigateFallback: publicUrl + '/',
       navigateFallbackBlacklist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
