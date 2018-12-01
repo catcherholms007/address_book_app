@@ -131,8 +131,8 @@ module.exports = merge(common,{
         use: {
           loader: "babel-loader",
           options: {
-            cacheDirectory: true,
-            cacheCompression: true,
+            // cacheDirectory: true,
+            // cacheCompression: true,
             compact: true,
           }
         },
@@ -178,22 +178,21 @@ module.exports = merge(common,{
   plugins: [
     new CleanWebpackPlugin(['docs']),
     new HtmlWebPackPlugin({
-      inject: true,
       template: "./index.html",
       filename: "./index.html",
       favicon: './favicon.ico',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
+      // minify: {
+      //   removeComments: true,
+      //   collapseWhitespace: true,
+      //   removeRedundantAttributes: true,
+      //   useShortDoctype: true,
+      //   removeEmptyAttributes: true,
+      //   removeStyleLinkTypeAttributes: true,
+      //   keepClosingSlash: true,
+      //   minifyJS: true,
+      //   minifyCSS: true,
+      //   minifyURLs: true,
+      // },
     }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
