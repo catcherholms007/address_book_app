@@ -1,25 +1,31 @@
-import {observable, action, toJS} from 'mobx';
-import worker from '../worker/worker.js';
+import { observable, action, toJS } from 'mobx';
+import worker from '../worker/worker';
 import WebWorker from '../worker/workerSetup';
-import ContactsAPI from '../api/contacts-api'
+import ContactsAPI from '../api/contacts-api';
 
 class ContactStore {
-
   @observable contacts = [];
+
   @observable loading = true;
+
   @observable filterQuery = '';
+
   @observable filterResult = [];
+
   @observable filtering = false;
 
   initWorker() {
     this.worker = new WebWorker(worker);
     this.worker.addEventListener('message', event => {
       const data = event.data.payload;
-      const type = event.data.type;
+      const { type } = event.data;
       switch (type) {
-        case 'FILTER_RESULT' : {
+        case 'FILTER_RESULT': {
           this.filterResult = data.filterResult;
           this.filtering = false;
+          break;
+        }
+        default: {
           break;
         }
       }
@@ -29,14 +35,14 @@ class ContactStore {
   @action
   fetchContacts() {
     ContactsAPI.get().then(snapshot => {
-      let data = snapshot.val();
+      const data = snapshot.val();
       if (data) {
         const keys = Object.keys(data);
         const keysCount = keys.length;
         for (let i = 0; i < keysCount; i++) {
           const id = keys[i];
           const value = data[id];
-          this.contacts.push(Object.assign(value, {id}));
+          this.contacts.push(Object.assign(value, { id }));
         }
       }
       this.loading = false;
@@ -53,15 +59,14 @@ class ContactStore {
     this.filtering = true;
     if (query === '') {
       this.clearSearch();
-    }
-    else {
+    } else {
       this.filterQuery = query;
       this.worker.postMessage({
         type: 'FILTER',
         payload: {
           query,
-          contacts: toJS(this.contacts)
-        }
+          contacts: toJS(this.contacts),
+        },
       });
     }
   }
@@ -71,14 +76,13 @@ class ContactStore {
     this.filtering = true;
     if (this.filterQuery === '') {
       this.clearSearch();
-    }
-    else {
+    } else {
       this.worker.postMessage({
         type: 'FILTER',
         payload: {
           query: this.filterQuery,
-          contacts: toJS(this.contacts)
-        }
+          contacts: toJS(this.contacts),
+        },
       });
     }
   }
@@ -92,28 +96,27 @@ class ContactStore {
 
   @action
   create(id, contact) {
-    return ContactsAPI.create(id, contact)
-      .then(() => {
-          this.contacts.push(Object.assign(contact, {id}));
-      })
+    return ContactsAPI.create(id, contact).then(() => {
+      this.contacts.push(Object.assign(contact, { id }));
+    });
   }
 
   @action
   update(id, contact) {
-    return ContactsAPI.update(id, contact)
-      .then(() => {
-        let contactLocal = this.contacts.findIndex(element => element.id === id);
-        this.contacts[contactLocal] = Object.assign(contact, {id});
-      })
+    return ContactsAPI.update(id, contact).then(() => {
+      const contactLocal = this.contacts.findIndex(
+        element => element.id === id,
+      );
+      this.contacts[contactLocal] = Object.assign(contact, { id });
+    });
   }
 
   @action
   delete(id) {
-    return ContactsAPI.delete(id)
-      .then(() => {
-          const index = this.contacts.findIndex(element => element.id === id);
-          this.contacts.splice(index, 1);
-      });
+    return ContactsAPI.delete(id).then(() => {
+      const index = this.contacts.findIndex(element => element.id === id);
+      this.contacts.splice(index, 1);
+    });
   }
 }
 

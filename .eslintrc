@@ -1,0 +1,18 @@
+{
+//  "rules": {
+//    "semi": ["error", "always"],
+//    "quotes": ["error", "double"]
+//  },
+  "parser": "babel-eslint",
+  "extends": ["airbnb"],
+  "rules": {
+    "quotes": "off",
+    "no-plusplus": "off",
+    "linebreak-style": "off",
+    "object-curly-newline": "off",
+    "comma-dangle": "off"
+  },
+  "env": {
+    "browser": true
+  }
+}

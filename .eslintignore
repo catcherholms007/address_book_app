@@ -1,0 +1,15 @@
+src/registerServiceWorker.js
+package.json
+.eslintignore
+.eslintrc
+.prettierignore
+public/*
+build/*
+docs/*
+__coverage__/*
+__mocks__/*
+src/worker/*.js
+enzymeAdapter.setup.js
+webpack.config.common.js
+webpack.config.develop.js
+webpack.config.prod.js

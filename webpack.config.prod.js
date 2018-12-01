@@ -3,8 +3,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
 const merge = require('webpack-merge');
 const fs = require('fs');
@@ -22,11 +22,11 @@ function ensureSlash(inputPath, needsSlash) {
   const hasSlash = inputPath.endsWith('/');
   if (hasSlash && !needsSlash) {
     return inputPath.substr(0, inputPath.length - 1);
-  } else if (!hasSlash && needsSlash) {
-    return `${inputPath}/`;
-  } else {
-    return inputPath;
   }
+  if (!hasSlash && needsSlash) {
+    return `${inputPath}/`;
+  }
+  return inputPath;
 }
 
 function getServedPath(appPackageJson) {
@@ -42,16 +42,16 @@ const publicPath = servedPath;
 const publicUrl = publicPath.slice(0, -1);
 const useSourceMap = false;
 
-module.exports = merge(common,{
-  //Fail out on the first error instead of tolerating it
+module.exports = merge(common, {
+  // Fail out on the first error instead of tolerating it
   bail: true,
   output: {
     path: path.resolve(__dirname, './docs'),
     filename: '[name].[hash].js',
-    publicPath: publicPath,
-    pathinfo: false
+    publicPath,
+    pathinfo: false,
   },
-  devtool: useSourceMap? 'source-map': false,
+  devtool: useSourceMap ? 'source-map' : false,
   optimization: {
     minimize: true,
     minimizer: [
@@ -101,18 +101,18 @@ module.exports = merge(common,{
       new OptimizeCssAssetsPlugin({
         cssProcessorOptions: {
           parser: safePostCssParser,
-          map: (false)
+          map: false
             ? {
-              // `inline: false` forces the sourcemap to be output into a
-              // separate file
-              inline: false,
-              // `annotation: true` appends the sourceMappingURL to the end of
-              // the css file, helping the browser find the sourcemap
-              annotation: true,
-            }
+                // `inline: false` forces the sourcemap to be output into a
+                // separate file
+                inline: false,
+                // `annotation: true` appends the sourceMappingURL to the end of
+                // the css file, helping the browser find the sourcemap
+                annotation: true,
+              }
             : false,
         },
-      })
+      }),
     ],
     // Automatically split vendor and commons
     // https://twitter.com/wSokra/status/969633336732905474
@@ -141,14 +141,14 @@ module.exports = merge(common,{
       {
         test: /\.jsx?$/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             // cacheDirectory: true,
             // cacheCompression: true,
             compact: true,
-          }
+          },
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -182,16 +182,16 @@ module.exports = merge(common,{
               ],
               sourceMap: false,
             },
-          }
-        ]
+          },
+        ],
       },
-    ]
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(['docs']),
     new HtmlWebPackPlugin({
-      template: "./index.html",
-      filename: "./index.html",
+      template: './index.html',
+      filename: './index.html',
       favicon: './favicon.ico',
       minify: {
         removeComments: true,
@@ -217,7 +217,7 @@ module.exports = merge(common,{
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-      publicPath: publicPath,
+      publicPath,
     }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.

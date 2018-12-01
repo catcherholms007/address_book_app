@@ -1,24 +1,24 @@
 {
-  "contacts" : {
-    "10ba038e-48da-487b-96e8-8d3b99b6d18a" : {
-      "email" : "gmail@chuck-norris.hero",
-      "name" : "Chuck Norris"
+  "contacts": {
+    "10ba038e-48da-487b-96e8-8d3b99b6d18a": {
+      "email": "gmail@chuck-norris.hero",
+      "name": "Chuck Norris"
     },
-    "45745c60-7b1a-11e8-9c9c-2d42b21b1a3e" : {
-      "email" : "super-man@dc.com",
-      "name" : "Superman"
+    "45745c60-7b1a-11e8-9c9c-2d42b21b1a3e": {
+      "email": "super-man@dc.com",
+      "name": "Superman"
     },
-    "9125a8dc-52ee-365b-a5aa-81b0b3681cf6" : {
-      "email" : "bat.man@dc.com",
-      "name" : "Batman"
+    "9125a8dc-52ee-365b-a5aa-81b0b3681cf6": {
+      "email": "bat.man@dc.com",
+      "name": "Batman"
     },
-    "c6235813-3ba4-3801-ae84-e0a6ebb7d138" : {
-      "email" : "gamora-the-guard@marvel.com",
-      "name" : "Gamora"
+    "c6235813-3ba4-3801-ae84-e0a6ebb7d138": {
+      "email": "gamora-the-guard@marvel.com",
+      "name": "Gamora"
     },
-    "e8b5a51d-11c8-3310-a6ab-367563f20686" : {
-      "email" : "rocket@marvel.com",
-      "name" : "Rocket Raccoon"
+    "e8b5a51d-11c8-3310-a6ab-367563f20686": {
+      "email": "rocket@marvel.com",
+      "name": "Rocket Raccoon"
     }
   }
 }

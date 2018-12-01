@@ -1,41 +1,38 @@
-import React, {Component} from 'react';
-import {inject, observer} from 'mobx-react';
-import {boundMethod} from 'autobind-decorator';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { boundMethod } from 'autobind-decorator';
 
-import Name from "./name/Name";
-import Email from "./email/Email";
-import ButtonSet from "./button-set/ButtonSet";
+import Name from './name/Name';
+import Email from './email/Email';
+import ButtonSet from './button-set/ButtonSet';
 
 import './styles.css';
 
 class ContactForm extends Component {
-
   state = {
-    message: null
+    message: null,
   };
 
   getValues() {
     return {
       name: this.name.value,
-      email: this.email.value
-    }
+      email: this.email.value,
+    };
   }
 
   componentDidMount() {
-    const {id, contactStore, isNew} = this.props;
+    const { id, contactStore, isNew } = this.props;
     if (contactStore.contacts.some(element => element.id === id)) {
       const contact = contactStore.contacts.find(elem => elem.id === id);
       this.email.value = contact.email;
       this.name.value = contact.name;
-    }
-    else if (id === 'new') {
+    } else if (id === 'new') {
       this.email.value = '';
       this.name.value = '';
     }
     if (isNew) {
       this.props.pageStore.viewNewContactPage();
-    }
-    else {
+    } else {
       this.props.pageStore.viewEditContactPage();
     }
   }
@@ -59,7 +56,7 @@ class ContactForm extends Component {
         onClick: this.onDeleteClick,
         isVisible: !this.props.isNew,
         type: 'button',
-        label: 'Delete'
+        label: 'Delete',
       },
       {
         className: 'button-set__save-button',
@@ -67,7 +64,7 @@ class ContactForm extends Component {
         onClick: this.onSaveClick,
         isVisible: true,
         type: 'submit',
-        label: 'Ok'
+        label: 'Ok',
       },
       {
         className: 'button-set__cancel-button',
@@ -75,8 +72,8 @@ class ContactForm extends Component {
         onClick: this.onCancelClick,
         isVisible: true,
         type: 'button',
-        label: 'Cancel'
-      }
+        label: 'Cancel',
+      },
     ];
   }
 
@@ -86,33 +83,33 @@ class ContactForm extends Component {
 
   @boundMethod
   onSaveClick() {
-    const {isNew, id} = this.props;
+    const { isNew, id } = this.props;
     if (this.isValid()) {
       this.setState({
-        message: isNew ? 'Creating' : 'Updating'
+        message: isNew ? 'Creating' : 'Updating',
       });
-      this.props.contactStore[isNew ? 'create' : 'update'](id, this.getValues())
-        .then(() => {
-          this.navigateToMainPage();
-        })
-
+      this.props.contactStore[isNew ? 'create' : 'update'](
+        id,
+        this.getValues(),
+      ).then(() => {
+        this.navigateToMainPage();
+      });
     }
   }
 
   navigateToMainPage() {
-    const {history, match} = this.props;
-    history.replace(match.url.slice(0, match.url.lastIndexOf('/')))
+    const { history, match } = this.props;
+    history.replace(match.url.slice(0, match.url.lastIndexOf('/')));
   }
 
   @boundMethod
   onDeleteClick() {
     this.setState({
-      message: 'Deleting'
+      message: 'Deleting',
     });
-    this.props.contactStore.delete(this.props.id)
-      .then(() => {
-        this.navigateToMainPage();
-      });
+    this.props.contactStore.delete(this.props.id).then(() => {
+      this.navigateToMainPage();
+    });
   }
 
   @boundMethod
@@ -125,12 +122,12 @@ class ContactForm extends Component {
       return this.state.message;
     }
     return (
-      <div className={'contact-form'}>
-        <Name ref={this.setNameRef}/>
-        <Email ref={this.setEmailRef}/>
-        <ButtonSet buttons={this.buttonsData()}/>
+      <div className="contact-form">
+        <Name ref={this.setNameRef} />
+        <Email ref={this.setEmailRef} />
+        <ButtonSet buttons={this.buttonsData()} />
       </div>
-    )
+    );
   }
 }
 

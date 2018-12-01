@@ -1,0 +1,9 @@
+package.json
+package-lock.json
+.eslintignore
+.eslintrc
+.prettierignore
+docs/
+__coverage__/
+__mocks__/
+.eslintrc

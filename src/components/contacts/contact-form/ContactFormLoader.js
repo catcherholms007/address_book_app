@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import uuid from 'uuid/v4';
-import {inject, observer} from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
-import ContactForm from "./ContactForm";
+import ContactForm from './ContactForm';
 
 import './styles.css';
 
 class ContactFormLoader extends Component {
-
   state = {
     isNew: true,
     id: null,
@@ -17,15 +16,14 @@ class ContactFormLoader extends Component {
     const id = this.props.match.params.contactId;
     if (this.props.contactStore.contacts.some(element => element.id === id)) {
       this.setState({
-        id: id,
+        id,
         isNew: false,
       });
-    }
-    else if (id === 'new') {
+    } else if (id === 'new') {
       this.setState({
         isNew: true,
         id: uuid(),
-      })
+      });
     }
   }
 

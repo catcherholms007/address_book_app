@@ -1,12 +1,11 @@
-import React, {Component, PureComponent} from 'react';
-import {inject, observer} from 'mobx-react';
-import {boundMethod} from "autobind-decorator";
+import React, { Component, PureComponent } from 'react';
+import { inject, observer } from 'mobx-react';
+import { boundMethod } from 'autobind-decorator';
 import debounce from 'lodash/debounce';
 
-import withReloadLoading from "../../../hoc/withReloadLoading";
+import withReloadLoading from '../../../hoc/withReloadLoading';
 
 class SearchInput extends Component {
-
   componentDidMount() {
     this.searchElement.getValue().value = this.props.contactStore.filterQuery;
     this.search = debounce(this.props.contactStore.search, 700);
@@ -31,17 +30,11 @@ class SearchInput extends Component {
   }
 
   render() {
-    return (
-      <PureInput
-        onChange={this.onFilterQueryChange}
-        ref={this.setRef}
-      />
-    );
+    return <PureInput onChange={this.onFilterQueryChange} ref={this.setRef} />;
   }
 }
 
-class PureInput extends PureComponent{
-
+class PureInput extends PureComponent {
   getValue() {
     return this.searchElement;
   }
@@ -53,13 +46,11 @@ class PureInput extends PureComponent{
 
   render() {
     return (
-      <input
-        type={'text'}
-        onChange={this.props.onChange}
-        ref={this.setRef}
-      />
-    )
+      <input type="text" onChange={this.props.onChange} ref={this.setRef} />
+    );
   }
 }
 
-export default inject('contactStore')(observer(withReloadLoading('contactStore', 'filterQuery', SearchInput)));
+export default inject('contactStore')(
+  observer(withReloadLoading('contactStore', 'filterQuery', SearchInput)),
+);

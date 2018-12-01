@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default class ValidatableInput extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -20,8 +19,8 @@ export default class ValidatableInput extends React.Component {
 
   set value(value) {
     this.setState({
-      value: value
-    })
+      value,
+    });
   }
 
   validate(value) {
@@ -31,16 +30,19 @@ export default class ValidatableInput extends React.Component {
   isValid() {
     const result = this.validate(this.state.value);
     this.setState({
-      error: !result
+      error: !result,
     });
     return result;
   }
 
   onChange(event) {
-    this.setState({
-      value: event.target.value
-    }, () => {
-      this.isValid()
-    });
+    this.setState(
+      {
+        value: event.target.value,
+      },
+      () => {
+        this.isValid();
+      },
+    );
   }
 }

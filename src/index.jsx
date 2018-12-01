@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'mobx-react/';
+import { Provider } from 'mobx-react/';
 import './index.css';
 import App from './containters/App';
 import ContactStore from './stores/contactStore';
@@ -9,12 +9,13 @@ import registerServiceWorker from './registerServiceWorker';
 
 const stores = {
   contactStore: new ContactStore(),
-  pageStore: new PageStore()
+  pageStore: new PageStore(),
 };
 
 ReactDOM.render(
-    <Provider {...stores} >
-      <App/>
-    </Provider>
-  , document.getElementById('root'));
+  <Provider {...stores}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);
 registerServiceWorker();

@@ -1,17 +1,17 @@
 import React from 'react';
-import HashRouter from "react-router-dom/HashRouter";
+import HashRouter from 'react-router-dom/HashRouter';
 import 'normalize.css';
 
-import Header from "../components/header/Header";
-import BodyContent from "./BodyContent";
+import Header from '../components/header/Header';
+import BodyContent from './BodyContent';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <HashRouter>
-        <BodyContent/>
+        <BodyContent />
       </HashRouter>
     </div>
   );

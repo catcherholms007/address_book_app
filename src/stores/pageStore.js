@@ -1,9 +1,8 @@
-import {observable, action} from 'mobx';
-
+import { observable, action } from 'mobx';
 
 class PageStore {
-
   @observable nextRoute = null;
+
   @observable status = '';
 
   @action
@@ -26,7 +25,6 @@ class PageStore {
   viewNewContactPage() {
     this.status = '/ New contact';
   }
-
 }
 
 export default PageStore;

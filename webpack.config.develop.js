@@ -1,13 +1,14 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const common = require('./webpack.config.common.js');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const common = require('./webpack.config.common.js');
 
 module.exports = merge(common, {
-  mode: "development",
+  mode: 'development',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].[hash].js',
@@ -18,14 +19,14 @@ module.exports = merge(common, {
       {
         test: /\.jsx?$/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             cacheDirectory: true,
             cacheCompression: false,
             compact: false,
-          }
+          },
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -52,27 +53,27 @@ module.exports = merge(common, {
               ],
               sourceMap: false,
             },
-          }
-        ]
+          },
+        ],
       },
-    ]
+    ],
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./index.html",
-      filename: "./index.html",
+      template: './index.html',
+      filename: './index.html',
       favicon: './favicon.ico',
     }),
     new WatchMissingNodeModulesPlugin(path.resolve('node_modules')),
     new CleanWebpackPlugin(['dist']),
-    new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin(),
   ],
   devServer: {
     historyApiFallback: true,
     contentBase: './',
-    hot: true
+    hot: true,
   },
   performance: {
-    hints: 'error'
-  }
+    hints: 'error',
+  },
 });

@@ -1,9 +1,8 @@
-import {get, post, put, del} from "../utils/requests";
+import { get, post, put, del } from '../utils/requests';
 
 const path = 'contacts';
 
 export default {
-
   get() {
     return get(path);
   },
