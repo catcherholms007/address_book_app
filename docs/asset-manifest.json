@@ -1,8 +1,10 @@
 {
-  "main.css": "/address_book_app/main.6b3ad5c6.css",
-  "main.js": "/address_book_app/main.fadbba9b48b60387473a.js",
+  "main.js": "/address_book_app/main.1e8321c28413f483f35e.js",
+  "styles.css": "/address_book_app/1.1e8321c28413f483f35e.css",
+  "styles.js": "/address_book_app/styles.1e8321c28413f483f35e.js",
+  "vendors~main.js": "/address_book_app/vendors~main.1e8321c28413f483f35e.js",
   "./index.html": "/address_book_app/./index.html",
   "favicon.ico": "/address_book_app/favicon.ico",
-  "precache-manifest.6f8c4393fa6740312acf03e92e959564.js": "/address_book_app/precache-manifest.6f8c4393fa6740312acf03e92e959564.js",
+  "precache-manifest.4b52b4a38d91eb350da4f22483fc3775.js": "/address_book_app/precache-manifest.4b52b4a38d91eb350da4f22483fc3775.js",
   "service-worker.js": "/address_book_app/service-worker.js"
 }
