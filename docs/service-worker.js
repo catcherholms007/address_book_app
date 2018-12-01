@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/address_book_app/precache-manifest.890812071b46f82bdac4a3ec71fa433b.js"
+  "/precache-manifest.c72c77840cc9b77d9c99959d3194e297.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/address_book_app/", {
+workbox.routing.registerNavigationRoute("/", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
