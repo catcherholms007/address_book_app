@@ -5,6 +5,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const merge = require('webpack-merge');
 const fs = require('fs');
+const url = require('url');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const common = require('./webpack.config.common.js');
 

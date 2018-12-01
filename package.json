@@ -1,6 +1,7 @@
 {
   "name": "address_book_app",
   "version": "0.1.0",
+  "homepage": "/address_book_app/",
   "private": true,
   "dependencies": {
     "autobind-decorator": "^2.3.1",
