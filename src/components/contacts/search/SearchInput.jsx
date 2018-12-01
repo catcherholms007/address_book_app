@@ -8,14 +8,15 @@ import withReloadLoading from "../../../hoc/withReloadLoading";
 class SearchInput extends Component {
 
   componentDidMount() {
-    this.searchElement.value = this.props.contactStore.filterQuery;
+    this.searchElement.getValue().value = this.props.contactStore.filterQuery;
     this.search = debounce(this.props.contactStore.search, 700);
   }
 
   componentDidUpdate() {
     const query = this.props.contactStore.filterQuery;
-    if (this.searchElement.value !== query) {
-      this.searchElement.value = query;
+    const searchElementValue = this.searchElement.getValue().value;
+    if (searchElementValue !== query) {
+      this.searchElement.getValue().value = query;
     }
   }
 
@@ -26,7 +27,7 @@ class SearchInput extends Component {
 
   @boundMethod
   setRef(element) {
-    this.searchElement = element.getValue();
+    this.searchElement = element;
   }
 
   render() {
