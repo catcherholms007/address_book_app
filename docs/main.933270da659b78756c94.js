@@ -147,7 +147,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([56,1]);
+/******/ 	deferredModules.push([55,1]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -160,7 +160,7 @@
 
 
 if (true) {
-  module.exports = __webpack_require__(25);
+  module.exports = __webpack_require__(24);
 } else {}
 
 
@@ -178,7 +178,7 @@ if (true) {
 if (false) { var throwOnDirectAccess, isValidElement, REACT_ELEMENT_TYPE; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(52)();
+  module.exports = __webpack_require__(51)();
 }
 
 
@@ -639,7 +639,7 @@ function createDecoratorForEnhancer$$1(enhancer) {
     });
     var res = 
     // Extra process checks, as this happens during module initialization
-    typeof process !== "undefined" && process.env && "production" !== "production"
+    typeof process !== "undefined" && Object({"PUBLIC_URL":/address_book_app/}) && "production" !== "production"
         ? function observableDecorator() {
             // This wrapper function is just to detect illegal decorator invocations, deprecate in a next version
             // and simply return the created prop decorator
@@ -4419,7 +4419,7 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(26);
+  module.exports = __webpack_require__(25);
 } else {}
 
 
@@ -4649,7 +4649,7 @@ process.umask = function() { return 0; };
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-__webpack_require__(36);
+__webpack_require__(35);
 var firebase = _interopDefault(__webpack_require__(12));
 
 /**
@@ -7203,7 +7203,7 @@ module.exports = isObject;
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var freeGlobal = __webpack_require__(44);
+var freeGlobal = __webpack_require__(43);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -7231,8 +7231,8 @@ module.exports = Symbol;
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var rng = __webpack_require__(31);
-var bytesToUuid = __webpack_require__(32);
+var rng = __webpack_require__(30);
+var bytesToUuid = __webpack_require__(31);
 
 function v4(options, buf, offset) {
   var i = buf && offset || 0;
@@ -7267,8 +7267,8 @@ module.exports = v4;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(16),
-    now = __webpack_require__(43),
-    toNumber = __webpack_require__(45);
+    now = __webpack_require__(42),
+    toNumber = __webpack_require__(44);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -7462,7 +7462,7 @@ module.exports = debounce;
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isarray = __webpack_require__(54)
+var isarray = __webpack_require__(53)
 
 /**
  * Expose `pathToRegexp`.
@@ -7967,110 +7967,6 @@ module.exports = hoistNonReactStatics;
 
 /***/ }),
 /* 24 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return register; });
-/* unused harmony export unregister */
-// In production, we register a service worker to serve assets from local cache.
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on the "N+1" visit to a page, since previously
-// cached resources are updated in the background.
-// To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
-// This link also includes instructions on opting out of this behavior.
-var isLocalhost = Boolean(window.location.hostname === 'localhost' || // [::1] is the IPv6 localhost address.
-window.location.hostname === '[::1]' || // 127.0.0.1/8 is considered localhost for IPv4.
-window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/));
-function register() {
-  if ( true && 'serviceWorker' in navigator) {
-    // The URL constructor is available in all browsers that support SW.
-    var publicUrl = new URL('/', window.location);
-
-    if (publicUrl.origin !== window.location.origin) {
-      // Our service worker won't work if PUBLIC_URL is on a different origin
-      // from what our page is served on. This might happen if a CDN is used to
-      // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
-      return;
-    }
-
-    window.addEventListener('load', function () {
-      var swUrl = "".concat(process.env.PUBLIC_URL, "/service-worker.js");
-
-      if (isLocalhost) {
-        // This is running on localhost. Lets check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl); // Add some additional logging to localhost, pointing developers to the
-        // service worker/PWA documentation.
-
-        navigator.serviceWorker.ready.then(function () {
-          console.log('This web app is being served cache-first by a service ' + 'worker. To learn more, visit https://goo.gl/SC7cgQ');
-        });
-      } else {
-        // Is not local host. Just register service worker
-        registerValidSW(swUrl);
-      }
-    });
-  }
-}
-
-function registerValidSW(swUrl) {
-  navigator.serviceWorker.register(swUrl).then(function (registration) {
-    registration.onupdatefound = function () {
-      var installingWorker = registration.installing;
-
-      installingWorker.onstatechange = function () {
-        if (installingWorker.state === 'installed') {
-          if (navigator.serviceWorker.controller) {
-            // At this point, the old content will have been purged and
-            // the fresh content will have been added to the cache.
-            // It's the perfect time to display a "New content is
-            // available; please refresh." message in your web app.
-            console.log('New content is available; please refresh.');
-          } else {
-            // At this point, everything has been precached.
-            // It's the perfect time to display a
-            // "Content is cached for offline use." message.
-            console.log('Content is cached for offline use.');
-          }
-        }
-      };
-    };
-  }).catch(function (error) {
-    console.error('Error during service worker registration:', error);
-  });
-}
-
-function checkValidServiceWorker(swUrl) {
-  // Check if the service worker can be found. If it can't reload the page.
-  fetch(swUrl).then(function (response) {
-    // Ensure service worker exists, and that we really are getting a JS file.
-    if (response.status === 404 || response.headers.get('content-type').indexOf('javascript') === -1) {
-      // No service worker found. Probably a different app. Reload the page.
-      navigator.serviceWorker.ready.then(function (registration) {
-        registration.unregister().then(function () {
-          window.location.reload();
-        });
-      });
-    } else {
-      // Service worker found. Proceed as normal.
-      registerValidSW(swUrl);
-    }
-  }).catch(function () {
-    console.log('No internet connection found. App is running in offline mode.');
-  });
-}
-
-function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(function (registration) {
-      registration.unregister();
-    });
-  }
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9)))
-
-/***/ }),
-/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8102,7 +7998,7 @@ X.useMutationEffect=function(a,b){return W().useMutationEffect(a,b)};X.useReduce
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8118,7 +8014,7 @@ X.useMutationEffect=function(a,b){return W().useMutationEffect(a,b)};X.useReduce
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),n=__webpack_require__(11),ba=__webpack_require__(27);function ca(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var k=[c,d,e,f,g,h],l=0;a=Error(b.replace(/%s/g,function(){return k[l++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+var aa=__webpack_require__(0),n=__webpack_require__(11),ba=__webpack_require__(26);function ca(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var k=[c,d,e,f,g,h],l=0;a=Error(b.replace(/%s/g,function(){return k[l++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
 function t(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);ca(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}aa?void 0:t("227");function da(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}
 var ea=!1,fa=null,ha=!1,ia=null,ja={onError:function(a){ea=!0;fa=a}};function ka(a,b,c,d,e,f,g,h,k){ea=!1;fa=null;da.apply(ja,arguments)}function la(a,b,c,d,e,f,g,h,k){ka.apply(this,arguments);if(ea){if(ea){var l=fa;ea=!1;fa=null}else t("198"),l=void 0;ha||(ha=!0,ia=l)}}var ma=null,na={};
 function oa(){if(ma)for(var a in na){var b=na[a],c=ma.indexOf(a);-1<c?void 0:t("96",a);if(!pa[c]){b.extractEvents?void 0:t("97",a);pa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;qa.hasOwnProperty(h)?t("99",h):void 0;qa[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ra(k[e],g,h);e=!0}else f.registrationName?(ra(f.registrationName,g,h),e=!0):e=!1;e?void 0:t("98",d,a)}}}}
@@ -8358,19 +8254,19 @@ var ei={default:bi},fi=ei&&bi||ei;module.exports=fi.default||fi;
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(28);
+  module.exports = __webpack_require__(27);
 } else {}
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8398,9 +8294,9 @@ exports.unstable_shouldYield=function(){return!f&&(null!==d&&d.expirationTime<l|
 
 
 /***/ }),
+/* 28 */,
 /* 29 */,
-/* 30 */,
-/* 31 */
+/* 30 */
 /***/ (function(module, exports) {
 
 // Unique ID creation requires a high quality random # generator.  In the
@@ -8440,7 +8336,7 @@ if (getRandomValues) {
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports) {
 
 /**
@@ -8470,15 +8366,15 @@ module.exports = bytesToUuid;
 
 
 /***/ }),
+/* 32 */,
 /* 33 */,
 /* 34 */,
-/* 35 */,
-/* 36 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(setImmediate, global) {/* harmony import */ var whatwg_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
+/* WEBPACK VAR INJECTION */(function(setImmediate, global) {/* harmony import */ var whatwg_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38);
 /* harmony import */ var whatwg_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(whatwg_fetch__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -10010,10 +9906,10 @@ var iterator = _wksExt.f('iterator');
  * limitations under the License.
  */
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(37).setImmediate, __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(36).setImmediate, __webpack_require__(7)))
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -10069,7 +9965,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(38);
+__webpack_require__(37);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -10083,7 +9979,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7)))
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -10276,7 +10172,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7), __webpack_require__(9)))
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports) {
 
 (function(self) {
@@ -10748,7 +10644,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10759,7 +10655,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var util = __webpack_require__(13);
-var logger = __webpack_require__(41);
+var logger = __webpack_require__(40);
 var tslib_1 = __webpack_require__(14);
 var firebase = _interopDefault(__webpack_require__(12));
 
@@ -21503,7 +21399,7 @@ var WebSocketConnection = /** @class */ (function () {
                     }
                 };
                 // Plumb appropriate http_proxy environment variable into faye-websocket if it exists.
-                var env = process['env'];
+                var env = Object({"PUBLIC_URL":/address_book_app/});
                 var proxy = this.connURL.indexOf('wss://') == 0
                     ? env['HTTPS_PROXY'] || env['https_proxy']
                     : env['HTTP_PROXY'] || env['http_proxy'];
@@ -26108,7 +26004,7 @@ exports.OnDisconnect = OnDisconnect;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9)))
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26312,8 +26208,8 @@ function setLogLevel(level) {
 
 
 /***/ }),
-/* 42 */,
-/* 43 */
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(17);
@@ -26342,7 +26238,7 @@ module.exports = now;
 
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -26353,11 +26249,11 @@ module.exports = freeGlobal;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7)))
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(16),
-    isSymbol = __webpack_require__(46);
+    isSymbol = __webpack_require__(45);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
@@ -26425,11 +26321,11 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(47),
-    isObjectLike = __webpack_require__(50);
+var baseGetTag = __webpack_require__(46),
+    isObjectLike = __webpack_require__(49);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -26460,12 +26356,12 @@ module.exports = isSymbol;
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(18),
-    getRawTag = __webpack_require__(48),
-    objectToString = __webpack_require__(49);
+    getRawTag = __webpack_require__(47),
+    objectToString = __webpack_require__(48);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -26494,7 +26390,7 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(18);
@@ -26546,7 +26442,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -26574,7 +26470,7 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports) {
 
 /**
@@ -26609,8 +26505,8 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 51 */,
-/* 52 */
+/* 50 */,
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26623,7 +26519,7 @@ module.exports = isObjectLike;
 
 
 
-var ReactPropTypesSecret = __webpack_require__(53);
+var ReactPropTypesSecret = __webpack_require__(52);
 
 function emptyFunction() {}
 
@@ -26676,7 +26572,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26695,7 +26591,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports) {
 
 module.exports = Array.isArray || function (arr) {
@@ -26704,8 +26600,8 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 55 */,
-/* 56 */
+/* 54 */,
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28189,7 +28085,7 @@ if ((typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === "undefined" ? "undefined" : _typeo
 
 
 // EXTERNAL MODULE: ./src/index.css
-var src = __webpack_require__(29);
+var src = __webpack_require__(28);
 
 // EXTERNAL MODULE: ./node_modules/warning/warning.js
 var warning = __webpack_require__(5);
@@ -29504,7 +29400,7 @@ HashRouter_HashRouter.propTypes = {
 
 /* harmony default export */ var es_HashRouter = (HashRouter_HashRouter);
 // EXTERNAL MODULE: ./node_modules/normalize.css/normalize.css
-var normalize = __webpack_require__(30);
+var normalize = __webpack_require__(29);
 
 // CONCATENATED MODULE: ./src/components/header/HeaderTitle.jsx
 function HeaderTitle_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { HeaderTitle_typeof = function _typeof(obj) { return typeof obj; }; } else { HeaderTitle_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return HeaderTitle_typeof(obj); }
@@ -30006,7 +29902,7 @@ function (_React$Component) {
 
 
 // EXTERNAL MODULE: ./src/components/contacts/contact-form/name/styles.css
-var styles = __webpack_require__(33);
+var styles = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./src/components/contacts/contact-form/name/Name.js
 function Name_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Name_typeof = function _typeof(obj) { return typeof obj; }; } else { Name_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Name_typeof(obj); }
@@ -30068,7 +29964,7 @@ function (_ValidatableInput) {
 
 
 // EXTERNAL MODULE: ./src/components/contacts/contact-form/email/styles.css
-var email_styles = __webpack_require__(34);
+var email_styles = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/components/contacts/contact-form/email/Email.js
 function Email_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Email_typeof = function _typeof(obj) { return typeof obj; }; } else { Email_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Email_typeof(obj); }
@@ -30135,7 +30031,7 @@ function (_ValidatableInput) {
 
 
 // EXTERNAL MODULE: ./src/components/contacts/contact-form/button-set/styles.css
-var button_set_styles = __webpack_require__(35);
+var button_set_styles = __webpack_require__(34);
 
 // CONCATENATED MODULE: ./src/components/contacts/contact-form/button-set/ButtonSet.js
 
@@ -30164,7 +30060,7 @@ var index_cjs = __webpack_require__(10);
 var index_cjs_default = /*#__PURE__*/__webpack_require__.n(index_cjs);
 
 // EXTERNAL MODULE: ./node_modules/@firebase/database/dist/index.cjs.js
-var dist_index_cjs = __webpack_require__(40);
+var dist_index_cjs = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./node_modules/firebase/database/dist/index.esm.js
 
@@ -30791,7 +30687,7 @@ NavLink_NavLink.defaultProps = {
 
 /* harmony default export */ var es_NavLink = (NavLink_NavLink);
 // EXTERNAL MODULE: ./src/components/contacts/search/styles.css
-var search_styles = __webpack_require__(42);
+var search_styles = __webpack_require__(41);
 
 // EXTERNAL MODULE: ./node_modules/lodash/debounce.js
 var debounce = __webpack_require__(21);
@@ -30997,7 +30893,7 @@ function SearchField() {
 var contact_list_styles = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./src/components/contacts/contact-list/contact-list-item/styles.css
-var contact_list_item_styles = __webpack_require__(51);
+var contact_list_item_styles = __webpack_require__(50);
 
 // CONCATENATED MODULE: ./src/components/contacts/contact-list/contact-list-item/ContactListItem.js
 var ContactListItem_class;
@@ -31263,7 +31159,7 @@ function (_Component) {
 
 /* harmony default export */ var containters_BodyContent = (react_router_dom_es_withRouter(inject('contactStore', 'pageStore')(observer(BodyContent_BodyContent))));
 // EXTERNAL MODULE: ./src/containters/App.css
-var App = __webpack_require__(55);
+var App = __webpack_require__(54);
 
 // CONCATENATED MODULE: ./src/containters/App.js
 
@@ -31562,9 +31458,102 @@ function () {
   }
 }), pageStore_applyDecoratedDescriptor(pageStore_class.prototype, "closeContactForm", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(pageStore_class.prototype, "closeContactForm"), pageStore_class.prototype), pageStore_applyDecoratedDescriptor(pageStore_class.prototype, "viewMainPage", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(pageStore_class.prototype, "viewMainPage"), pageStore_class.prototype), pageStore_applyDecoratedDescriptor(pageStore_class.prototype, "viewEditContactPage", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(pageStore_class.prototype, "viewEditContactPage"), pageStore_class.prototype), pageStore_applyDecoratedDescriptor(pageStore_class.prototype, "viewNewContactPage", [mobx_module["d" /* action */]], Object.getOwnPropertyDescriptor(pageStore_class.prototype, "viewNewContactPage"), pageStore_class.prototype)), pageStore_class);
 /* harmony default export */ var pageStore = (PageStore);
-// EXTERNAL MODULE: ./src/registerServiceWorker.js
-var registerServiceWorker = __webpack_require__(24);
+// CONCATENATED MODULE: ./src/registerServiceWorker.js
+// In production, we register a service worker to serve assets from local cache.
+// This lets the app load faster on subsequent visits in production, and gives
+// it offline capabilities. However, it also means that developers (and users)
+// will only see deployed updates on the "N+1" visit to a page, since previously
+// cached resources are updated in the background.
+// To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
+// This link also includes instructions on opting out of this behavior.
+var isLocalhost = Boolean(window.location.hostname === 'localhost' || // [::1] is the IPv6 localhost address.
+window.location.hostname === '[::1]' || // 127.0.0.1/8 is considered localhost for IPv4.
+window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/));
+function register() {
+  if ( true && 'serviceWorker' in navigator) {
+    // The URL constructor is available in all browsers that support SW.
+    var publicUrl = new URL('/', window.location);
 
+    if (publicUrl.origin !== window.location.origin) {
+      // Our service worker won't work if PUBLIC_URL is on a different origin
+      // from what our page is served on. This might happen if a CDN is used to
+      // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
+      return;
+    }
+
+    window.addEventListener('load', function () {
+      var swUrl = "".concat(/address_book_app/, "/service-worker.js");
+
+      if (isLocalhost) {
+        // This is running on localhost. Lets check if a service worker still exists or not.
+        checkValidServiceWorker(swUrl); // Add some additional logging to localhost, pointing developers to the
+        // service worker/PWA documentation.
+
+        navigator.serviceWorker.ready.then(function () {
+          console.log('This web app is being served cache-first by a service ' + 'worker. To learn more, visit https://goo.gl/SC7cgQ');
+        });
+      } else {
+        // Is not local host. Just register service worker
+        registerValidSW(swUrl);
+      }
+    });
+  }
+}
+
+function registerValidSW(swUrl) {
+  navigator.serviceWorker.register(swUrl).then(function (registration) {
+    registration.onupdatefound = function () {
+      var installingWorker = registration.installing;
+
+      installingWorker.onstatechange = function () {
+        if (installingWorker.state === 'installed') {
+          if (navigator.serviceWorker.controller) {
+            // At this point, the old content will have been purged and
+            // the fresh content will have been added to the cache.
+            // It's the perfect time to display a "New content is
+            // available; please refresh." message in your web app.
+            console.log('New content is available; please refresh.');
+          } else {
+            // At this point, everything has been precached.
+            // It's the perfect time to display a
+            // "Content is cached for offline use." message.
+            console.log('Content is cached for offline use.');
+          }
+        }
+      };
+    };
+  }).catch(function (error) {
+    console.error('Error during service worker registration:', error);
+  });
+}
+
+function checkValidServiceWorker(swUrl) {
+  // Check if the service worker can be found. If it can't reload the page.
+  fetch(swUrl).then(function (response) {
+    // Ensure service worker exists, and that we really are getting a JS file.
+    if (response.status === 404 || response.headers.get('content-type').indexOf('javascript') === -1) {
+      // No service worker found. Probably a different app. Reload the page.
+      navigator.serviceWorker.ready.then(function (registration) {
+        registration.unregister().then(function () {
+          window.location.reload();
+        });
+      });
+    } else {
+      // Service worker found. Proceed as normal.
+      registerValidSW(swUrl);
+    }
+  }).catch(function () {
+    console.log('No internet connection found. App is running in offline mode.');
+  });
+}
+
+function unregister() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(function (registration) {
+      registration.unregister();
+    });
+  }
+}
 // CONCATENATED MODULE: ./src/index.js
 
 
@@ -31579,7 +31568,7 @@ var stores = {
   pageStore: new pageStore()
 };
 react_dom_default.a.render(react_default.a.createElement(index_module_Provider, stores, react_default.a.createElement(containters_App, null)), document.getElementById('root'));
-Object(registerServiceWorker["a" /* default */])();
+register();
 
 /***/ })
 /******/ ]);

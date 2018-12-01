@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack');
 
 module.exports = {
   module: {
@@ -44,6 +45,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].[hash].css",
       chunkFilename: "[id].[hash].css"
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        PUBLIC_URL: process.env.NODE_ENV === 'development'? '/': '/address_book_app/'
+      }
     })
   ],
   resolve: {
