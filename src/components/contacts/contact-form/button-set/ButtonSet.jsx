@@ -24,7 +24,15 @@ function ButtonSet({ buttons }) {
 }
 
 ButtonSet.propTypes = {
-  buttons: PropTypes.shape().isRequired,
+  buttons: PropTypes.arrayOf(
+    PropTypes.shape({
+      className: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+      label: PropTypes.string.isRequired,
+      isVisible: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default ButtonSet;

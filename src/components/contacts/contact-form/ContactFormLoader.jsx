@@ -13,13 +13,21 @@ class ContactFormLoader extends Component {
   };
 
   componentDidMount() {
-    const id = this.props.match.params.contactId;
-    if (this.props.contactStore.contacts.some(element => element.id === id)) {
+    const {
+      pageStore,
+      contactStore,
+      match: {
+        params: { contactId },
+      },
+    } = this.props;
+    if (contactStore.contacts.some(element => element.id === contactId)) {
+      pageStore.viewEditContactPage();
       this.setState({
-        id,
         isNew: false,
+        id: contactId,
       });
-    } else if (id === 'new') {
+    } else if (contactId === 'new') {
+      pageStore.viewNewContactPage();
       this.setState({
         isNew: true,
         id: uuid(),
@@ -28,18 +36,15 @@ class ContactFormLoader extends Component {
   }
 
   componentWillUnmount() {
-    this.props.contactStore.research();
+    const { contactStore, pageStore } = this.props;
+    contactStore.research();
+    pageStore.viewMainPage();
   }
 
   render() {
-    if (this.state.id) {
-      return (
-        <ContactForm
-          {...this.props}
-          id={this.state.id}
-          isNew={this.state.isNew}
-        />
-      );
+    const { id, isNew } = this.state;
+    if (id) {
+      return <ContactForm {...this.props} id={id} isNew={isNew} />;
     }
     return 'Not Found';
   }

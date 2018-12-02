@@ -1,4 +1,4 @@
-import { observable, action, toJS } from 'mobx';
+import { observable, action, toJS, computed } from 'mobx';
 import worker from '../worker/worker';
 import WebWorker from '../worker/workerSetup';
 import ContactsAPI from '../api/contacts-api';
@@ -10,7 +10,7 @@ class ContactStore {
 
   @observable filterQuery = '';
 
-  @observable filterResult = [];
+  @observable filterResult = null;
 
   @observable filtering = false;
 
@@ -90,7 +90,7 @@ class ContactStore {
   @action.bound
   clearSearch() {
     this.filterQuery = '';
-    this.filterResult = [];
+    this.filterResult = null;
     this.filtering = false;
   }
 
@@ -113,8 +113,19 @@ class ContactStore {
   delete(id) {
     return ContactsAPI.delete(id).then(() => {
       const index = this.contacts.findIndex(element => element.id === id);
+      console.log(this.contacts.length);
       this.contacts.splice(index, 1);
+      console.log(this.contacts.length);
     });
+  }
+
+  @computed
+  get actualContacts() {
+    return this.filterQuery !== ''
+      ? this.filterResult
+        ? this.filterResult
+        : this.contacts
+      : this.contacts;
   }
 }
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import NavLink from 'react-router-dom/NavLink';
-import { inject } from 'mobx-react';
 import { boundMethod } from 'autobind-decorator';
 
 import Icon from '../../../shared/icons/Icon';
 
 import './styles.css';
+import { inject, observer } from 'mobx-react';
 
 class ContactListItem extends Component {
   state = {
@@ -14,10 +14,9 @@ class ContactListItem extends Component {
 
   @boundMethod
   onDeleteClick() {
-    // TODO as one action via bus
-    const { contactStore, pageStore, id } = this.props;
+    const { id, contactStore } = this.props;
     contactStore.delete(id).then(() => {
-      pageStore.closeContactForm();
+      console.log('ok');
     });
     this.setState({
       message: 'Deleting...',
@@ -55,4 +54,4 @@ class ContactListItem extends Component {
   }
 }
 
-export default inject('contactStore', 'pageStore')(ContactListItem);
+export default inject('contactStore')(observer(ContactListItem));

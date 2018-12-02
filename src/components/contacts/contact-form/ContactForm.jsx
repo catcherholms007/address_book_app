@@ -14,7 +14,7 @@ class ContactForm extends Component {
   };
 
   componentDidMount() {
-    const { id, contactStore, isNew, pageStore } = this.props;
+    const { id, contactStore } = this.props;
     if (contactStore.contacts.some(element => element.id === id)) {
       const contact = contactStore.contacts.find(elem => elem.id === id);
       this.email.value = contact.email;
@@ -22,11 +22,6 @@ class ContactForm extends Component {
     } else if (id === 'new') {
       this.email.value = '';
       this.name.value = '';
-    }
-    if (isNew) {
-      pageStore.viewNewContactPage();
-    } else {
-      pageStore.viewEditContactPage();
     }
   }
 
@@ -128,4 +123,4 @@ class ContactForm extends Component {
   }
 }
 
-export default inject('contactStore', 'pageStore')(observer(ContactForm));
+export default inject('contactStore')(observer(ContactForm));
