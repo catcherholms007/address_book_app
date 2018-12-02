@@ -11,7 +11,9 @@
     "linebreak-style": "off",
     "object-curly-newline": "off",
     "comma-dangle": "off",
-    "no-trailing-spaces": ["error", { "skipBlankLines": true }]
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+    "arrow-parens": "off",
+    "react/jsx-one-expression-per-line": "off"
   },
   "env": {
     "browser": true

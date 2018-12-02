@@ -3,7 +3,7 @@ import withRouter from 'react-router-dom/withRouter';
 import Route from 'react-router-dom/Route';
 import ContactFormLoader from './contacts/contact-form/ContactFormLoader';
 import ContactListBox from './contacts/contact-list/ContactListBox';
-import { withLoading } from '../hoc/withLoading';
+import withLoading from '../hoc/withLoading';
 
 function Router({ match }) {
   return (

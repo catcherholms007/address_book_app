@@ -17,5 +17,5 @@ export default {
 
   delete(id) {
     return del(path, id);
-  }
+  },
 };

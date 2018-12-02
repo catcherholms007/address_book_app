@@ -73,7 +73,8 @@ module.exports = merge(common, {
     contentBase: './',
     hot: true,
   },
-  performance: {
-    hints: 'error',
-  },
+  // uncomment below for showing webpack performance errors
+  // performance: {
+  //   hints: 'error',
+  // },
 });

@@ -104,9 +104,7 @@ class ContactStore {
   @action
   update(id, contact) {
     return ContactsAPI.update(id, contact).then(() => {
-      const contactLocal = this.contacts.findIndex(
-        element => element.id === id,
-      );
+      const contactLocal = this.contacts.findIndex(element => element.id === id);
       this.contacts[contactLocal] = Object.assign(contact, { id });
     });
   }

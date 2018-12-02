@@ -14,7 +14,7 @@ class ContactForm extends Component {
   };
 
   componentDidMount() {
-    const { id, contactStore, isNew } = this.props;
+    const { id, contactStore, isNew, pageStore } = this.props;
     if (contactStore.contacts.some(element => element.id === id)) {
       const contact = contactStore.contacts.find(elem => elem.id === id);
       this.email.value = contact.email;
@@ -24,23 +24,20 @@ class ContactForm extends Component {
       this.name.value = '';
     }
     if (isNew) {
-      this.props.pageStore.viewNewContactPage();
+      pageStore.viewNewContactPage();
     } else {
-      this.props.pageStore.viewEditContactPage();
+      pageStore.viewEditContactPage();
     }
   }
 
   @boundMethod
   onSaveClick() {
-    const { isNew, id } = this.props;
+    const { isNew, id, contactStore } = this.props;
     if (this.isValid()) {
       this.setState({
         message: isNew ? 'Creating' : 'Updating',
       });
-      this.props.contactStore[isNew ? 'create' : 'update'](
-        id,
-        this.getValues(),
-      ).then(() => {
+      contactStore[isNew ? 'create' : 'update'](id, this.getValues()).then(() => {
         this.navigateToMainPage();
       });
     }
@@ -48,12 +45,18 @@ class ContactForm extends Component {
 
   @boundMethod
   onDeleteClick() {
+    const { contactStore, id } = this.props;
     this.setState({
       message: 'Deleting',
     });
-    this.props.contactStore.delete(this.props.id).then(() => {
+    contactStore.delete(id).then(() => {
       this.navigateToMainPage();
     });
+  }
+
+  @boundMethod
+  onCancelClick() {
+    this.navigateToMainPage();
   }
 
   getValues() {
@@ -61,11 +64,6 @@ class ContactForm extends Component {
       name: this.name.value,
       email: this.email.value,
     };
-  }
-
-  @boundMethod
-  onCancelClick() {
-    this.navigateToMainPage();
   }
 
   @boundMethod
@@ -80,12 +78,13 @@ class ContactForm extends Component {
 
   @boundMethod
   buttonsData() {
+    const { isNew } = this.props;
     return [
       {
         className: 'button-set__delete-button',
         name: 'delete',
         onClick: this.onDeleteClick,
-        isVisible: !this.props.isNew,
+        isVisible: !isNew,
         label: 'Delete',
       },
       {
@@ -115,8 +114,9 @@ class ContactForm extends Component {
   }
 
   render() {
-    if (this.state.message) {
-      return this.state.message;
+    const { message } = this.state;
+    if (message) {
+      return message;
     }
     return (
       <div className="contact-form">

@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { boundMethod } from 'autobind-decorator';
 import debounce from 'lodash/debounce';
 
-import withReloadLoading from '../../../hoc/withReloadLoading';
+import withStorePropertyReloading from '../../../hoc/withStorePropertyReloading';
 
 class SearchInput extends Component {
   componentDidMount() {
@@ -12,10 +12,12 @@ class SearchInput extends Component {
   }
 
   componentDidUpdate() {
-    const query = this.props.contactStore.filterQuery;
+    const {
+      contactStore: { filterQuery },
+    } = this.props;
     const searchElementValue = this.searchElement.getValue().value;
-    if (searchElementValue !== query) {
-      this.searchElement.getValue().value = query;
+    if (searchElementValue !== filterQuery) {
+      this.searchElement.getValue().value = filterQuery;
     }
   }
 
@@ -45,12 +47,10 @@ class PureInput extends PureComponent {
   }
 
   render() {
-    return (
-      <input type="text" onChange={this.props.onChange} ref={this.setRef} />
-    );
+    return <input type="text" onChange={this.props.onChange} ref={this.setRef} />;
   }
 }
 
 export default inject('contactStore')(
-  observer(withReloadLoading('contactStore', 'filterQuery', SearchInput)),
+  observer(withStorePropertyReloading('contactStore', 'filterQuery', SearchInput)),
 );

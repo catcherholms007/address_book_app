@@ -15,8 +15,9 @@ class ContactListItem extends Component {
   @boundMethod
   onDeleteClick() {
     // TODO as one action via bus
-    this.props.contactStore.delete(this.props.id).then(() => {
-      this.props.pageStore.closeContactForm();
+    const { contactStore, pageStore, id } = this.props;
+    contactStore.delete(id).then(() => {
+      pageStore.closeContactForm();
     });
     this.setState({
       message: 'Deleting...',
@@ -24,25 +25,29 @@ class ContactListItem extends Component {
   }
 
   render() {
+    const { name, email, id } = this.props;
+    const { message } = this.state;
     return (
       <div className="contact-list-item">
         <div className="contact-list-item__info">
-          <NavLink to={`/${this.props.id}`}>
-            <div className="contact-list-item__name">{this.props.name}</div>
+          <NavLink to={`/${id}`}>
+            <div className="contact-list-item__name">{name}</div>
           </NavLink>
-          <div className="contact-list-item__email">{this.props.email}</div>
+          <div className="contact-list-item__email">{email}</div>
         </div>
         <div className="contact-list-item__right-part">
           <div className="contact-list-item__message">
-            <span>{this.state.message}</span>
+            <span>{message}</span>
           </div>
           <div className="contact-list-item__actions">
-            {this.state.message && (
+            {message && (
               <div className="contact-list-item__spinner">
                 <Icon name="spinner" />
               </div>
             )}
-            <button onClick={this.onDeleteClick}>X</button>
+            <button onClick={this.onDeleteClick} type="button">
+              X
+            </button>
           </div>
         </div>
       </div>
