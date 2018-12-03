@@ -6,48 +6,28 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
+const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
+const paths = require('./config/paths');
+const getClientEnvironment = require('./config/env');
 const merge = require('webpack-merge');
-const fs = require('fs');
-const url = require('url');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const common = require('./webpack.config.common.js');
 
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
-const envPublicUrl = process.env.PUBLIC_URL;
-const getPublicUrl = appPackageJson =>
-  envPublicUrl || require(appPackageJson).homepage;
-
-function ensureSlash(inputPath, needsSlash) {
-  const hasSlash = inputPath.endsWith('/');
-  if (hasSlash && !needsSlash) {
-    return inputPath.substr(0, inputPath.length - 1);
-  }
-  if (!hasSlash && needsSlash) {
-    return `${inputPath}/`;
-  }
-  return inputPath;
-}
-
-function getServedPath(appPackageJson) {
-  const publicUrl = getPublicUrl(appPackageJson);
-  const servedUrl =
-    envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
-  return ensureSlash(servedUrl, true);
-}
-
-const servedPath = getServedPath(resolveApp('package.json'));
-const publicPath = servedPath;
+const publicPath = paths.servedPath;
 
 const publicUrl = publicPath.slice(0, -1);
+const env = getClientEnvironment(publicUrl);
 const useSourceMap = false;
 
 module.exports = merge(common, {
+  mode: 'production',
   // Fail out on the first error instead of tolerating it
   bail: true,
   output: {
     path: path.resolve(__dirname, './docs'),
-    filename: '[name].[hash].js',
+    filename: '[name].[[chunkhash:8].js',
+    chunkFilename: '[name].[chunkhash:8].chunk.js',
     publicPath,
     pathinfo: false,
   },
@@ -123,6 +103,7 @@ module.exports = merge(common, {
     // },
     splitChunks: {
       chunks: 'all',
+      name: false,
       // cacheGroups: {
       //   styles: {
       //     name: 'styles',
@@ -137,14 +118,17 @@ module.exports = merge(common, {
     runtimeChunk: true,
   },
   module: {
+    strictExportPresence: true,
+
     rules: [
+      { parser: { requireEnsure: false } },
       {
         test: /\.jsx?$/,
         use: {
           loader: 'babel-loader',
           options: {
-            // cacheDirectory: true,
-            // cacheCompression: true,
+            cacheDirectory: true,
+            cacheCompression: true,
             compact: true,
           },
         },
@@ -190,6 +174,7 @@ module.exports = merge(common, {
   plugins: [
     new CleanWebpackPlugin(['docs']),
     new HtmlWebPackPlugin({
+      inject: true,
       template: './index.html',
       filename: './index.html',
       favicon: './favicon.ico',
@@ -206,12 +191,15 @@ module.exports = merge(common, {
         minifyURLs: true,
       },
     }),
+    new webpack.DefinePlugin(env.stringified),
     // new MiniCssExtractPlugin({
     //   // Options similar to the same options in webpackOptions.output
     //   // both options are optional
     //   filename: '[name].[contenthash].css',
     //   chunkFilename: '[name].[contenthash].chunk.css',
     // }),
+    new InlineChunkHtmlPlugin(HtmlWebPackPlugin, [/runtime~.+[.]js/]),
+
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
@@ -225,7 +213,7 @@ module.exports = merge(common, {
       clientsClaim: true,
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'cdn',
-      navigateFallback: '/',
+      navigateFallback: publicUrl + '/index.html',
       navigateFallbackBlacklist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
@@ -235,5 +223,12 @@ module.exports = merge(common, {
       ],
     }),
   ],
+  node: {
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
+  },
   performance: false,
 });

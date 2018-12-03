@@ -7,3 +7,4 @@ docs/
 __coverage__/
 __mocks__/
 .eslintrc
+config/
