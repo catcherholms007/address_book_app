@@ -1,25 +1,34 @@
 import React, { PureComponent, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
+import PropTypes from 'prop-types';
 
-function ClearSearchButton() {
-  return this.props.contactStore.filterQuery !== '' ? (
-    <ClearSearchButtonViewer onClick={this.props.contactStore.clearSearch} />
+import ContactStore from '../../../stores/contactStore';
+
+function ClearSearchButton({ contactStore }) {
+  return contactStore.filterQuery !== '' ? (
+    <ClearSearchButtonViewer onClick={contactStore.clearSearch} />
   ) : (
     <Fragment />
   );
 }
 
+ClearSearchButton.propTypes = {
+  contactStore: PropTypes.instanceOf(ContactStore).isRequired,
+};
+
 class ClearSearchButtonViewer extends PureComponent {
   render() {
+    const { onClick } = this.props;
     return (
-      <button
-        className="search-container__close-button"
-        onClick={this.props.onClick}
-      >
+      <button className="search-container__close-button" onClick={onClick} type="button">
         {'X'}
       </button>
     );
   }
 }
+
+ClearSearchButtonViewer.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
 
 export default inject('contactStore')(observer(ClearSearchButton));

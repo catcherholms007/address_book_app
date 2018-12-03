@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
-import NavLink from 'react-router-dom/NavLink';
+import React, { PureComponent } from 'react';
 import { boundMethod } from 'autobind-decorator';
+import PropTypes from 'prop-types';
 
+import NavLink from 'react-router-dom/NavLink';
 import Icon from '../../../shared/icons/Icon';
 
 import './styles.css';
-import { inject, observer } from 'mobx-react';
 
-class ContactListItem extends Component {
+class ContactListItem extends PureComponent {
   state = {
     message: null,
   };
 
   @boundMethod
   onDeleteClick() {
-    const { id, contactStore } = this.props;
-    contactStore.delete(id).then(() => {
-      console.log('ok');
-    });
+    const { id, onDeleteClick } = this.props;
+    onDeleteClick(id);
     this.setState({
       message: 'Deleting...',
     });
@@ -54,4 +52,11 @@ class ContactListItem extends Component {
   }
 }
 
-export default inject('contactStore')(observer(ContactListItem));
+ContactListItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+};
+
+export default ContactListItem;

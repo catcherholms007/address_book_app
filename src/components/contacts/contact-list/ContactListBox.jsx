@@ -2,7 +2,7 @@ import React from 'react';
 import NavLink from 'react-router-dom/NavLink';
 
 import SearchField from '../search/SearchField';
-import ContactListResolver from './ContactListResolver';
+import ContactList from './ContactList';
 
 import './styles.css';
 
@@ -11,7 +11,7 @@ function ContactListBox() {
     <div className="contact-list">
       <SearchField />
       <div className="contact-list__content">
-        <ContactListResolver />
+        <ContactList />
         <NavLink to="/new">
           <button className="contact-list__add-button" type="button">
             +

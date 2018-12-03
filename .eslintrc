@@ -13,7 +13,8 @@
     "comma-dangle": "off",
     "no-trailing-spaces": ["error", { "skipBlankLines": true }],
     "arrow-parens": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "no-nested-ternary": "off"
   },
   "env": {
     "browser": true

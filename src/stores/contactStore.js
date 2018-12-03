@@ -1,4 +1,5 @@
 import { observable, action, toJS, computed } from 'mobx';
+
 import worker from '../worker/worker';
 import WebWorker from '../worker/workerSetup';
 import ContactsAPI from '../api/contacts-api';
@@ -21,7 +22,9 @@ class ContactStore {
       const { type } = event.data;
       switch (type) {
         case 'FILTER_RESULT': {
-          this.filterResult = data.filterResult;
+          if (data.refresh) {
+            this.filterResult = data.filterResult;
+          }
           this.filtering = false;
           break;
         }
@@ -66,6 +69,7 @@ class ContactStore {
         payload: {
           query,
           contacts: toJS(this.contacts),
+          filterResult: toJS(this.filterResult),
         },
       });
     }
@@ -113,9 +117,7 @@ class ContactStore {
   delete(id) {
     return ContactsAPI.delete(id).then(() => {
       const index = this.contacts.findIndex(element => element.id === id);
-      console.log(this.contacts.length);
       this.contacts.splice(index, 1);
-      console.log(this.contacts.length);
     });
   }
 

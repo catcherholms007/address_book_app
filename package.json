@@ -96,13 +96,13 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,json,md}": [
+    "*.{js,jsx}": [
       "prettier --write"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
+      "pre-commit": "npm lint-staged & npm lint & npm test",
       "pre-push": "npm test"
     }
   }

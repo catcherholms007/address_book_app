@@ -1,12 +1,15 @@
+/* eslint-disable no-bitwise */
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { boundMethod } from 'autobind-decorator';
+import PropTypes from 'prop-types';
 
 import Name from './name/Name';
 import Email from './email/Email';
 import ButtonSet from './button-set/ButtonSet';
 
 import './styles.css';
+import ContactStore from '../../../stores/contactStore';
 
 class ContactForm extends Component {
   state = {
@@ -122,5 +125,17 @@ class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  contactStore: PropTypes.instanceOf(ContactStore).isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+  id: PropTypes.string.isRequired,
+  isNew: PropTypes.bool.isRequired,
+  match: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default inject('contactStore')(observer(ContactForm));

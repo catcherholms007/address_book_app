@@ -1,9 +1,10 @@
 import React from 'react';
 
-import './styles.css';
 import SearchInput from './SearchInput';
 import SearchIcon from './SearchIcon';
 import ClearSearchButton from './ClearSearchButton';
+
+import './styles.css';
 
 function SearchField() {
   return (
